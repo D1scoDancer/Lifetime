@@ -1,8 +1,10 @@
-package ru.alekssey7227.lifetime;
+package ru.alekssey7227.lifetime.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ru.alekssey7227.lifetime.R;
 
 public class MainActivity extends AppCompatActivity {
 
