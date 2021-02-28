@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -77,13 +78,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return goalList;
     }
 
+    public void updateGoal(SQLiteDatabase db, Goal oldGoal, Goal newGoal) { //TODO: возвращать int?
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_NAME, newGoal.getName());
+        contentValues.put(KEY_TIME, newGoal.getTime());
+        contentValues.put(KEY_ITERATION, newGoal.getIteration());
+
+        int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(oldGoal.getId())});
+
+        Log.d("mLog", "updates row count = " + updCount);
+    }
+
     public void deleteGoal(SQLiteDatabase db, Goal goal) {
+        int delCount = db.delete(TABLE_GOALS, KEY_ID + "=" + goal.getId(), null); //TODO: выбрать лучший способ проверки
 
+        Log.d("mLog", "deleted rows count = " + delCount);
     }
-
-    public void updateGoal(SQLiteDatabase db, Goal oldGoal, Goal newGoal) {
-        
-    }
-
-
 }
