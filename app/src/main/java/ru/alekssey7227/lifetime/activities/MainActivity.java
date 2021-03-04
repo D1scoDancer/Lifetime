@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,30 +37,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            // action with ID action_settings was selected
-//            case R.id.action_settings:
-//                // this is where you put your own code to do what you want.
-//                break;
-//            default:
-//                break;
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.app_bar_add_goal) {
+            SQLiteDatabase database = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put(DBHelper.KEY_NAME, "C#");
+            contentValues.put(DBHelper.KEY_TIME, "1000");
+            contentValues.put(DBHelper.KEY_ITERATION, "120");
+
+            database.insert(DBHelper.TABLE_GOALS, null, contentValues);
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
 
-//        if (v.getId() == R.id.btnAdd) {
-//            contentValues.put(DBHelper.KEY_NAME, "C#");
-//            contentValues.put(DBHelper.KEY_TIME, "1000");
-//            contentValues.put(DBHelper.KEY_ITERATION, "120");
-//
-//            database.insert(DBHelper.TABLE_GOALS, null, contentValues);
-//        }  // см урок 34
     }
 }
