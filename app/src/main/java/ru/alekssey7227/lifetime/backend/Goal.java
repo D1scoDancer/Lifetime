@@ -74,4 +74,14 @@ public class Goal {
         String s = df.format(time / 60.0);
         return Double.parseDouble(s);
     }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", time=" + time +
+                ", iteration=" + iteration +
+                '}';
+    }
 }
