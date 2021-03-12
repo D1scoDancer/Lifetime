@@ -6,17 +6,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ru.alekssey7227.lifetime.R;
+import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
+import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.DBHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolBar;
+    private RecyclerView goalsRV;
     private DBHelper dbHelper;
 
     @Override
@@ -27,7 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mToolBar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolBar);
 
+        goalsRV = findViewById(R.id.goalsRV);
+
         dbHelper = new DBHelper(this);
+        rvUpdate();
     }
 
     @Override
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Добавление новой цели
         if (item.getItemId() == R.id.app_bar_add_goal) {
             SQLiteDatabase database = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -48,10 +59,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             contentValues.put(DBHelper.KEY_ITERATION, "120");
 
             database.insert(DBHelper.TABLE_GOALS, null, contentValues);
+
+            rvUpdate();
         } else {
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void rvUpdate() {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        List<Goal> goals = dbHelper.readAllGoals(database);
+
+        GoalsRVAdapter adapter = new GoalsRVAdapter();
+        adapter.setGoals(goals);
+        goalsRV.setAdapter(adapter);
+        goalsRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
