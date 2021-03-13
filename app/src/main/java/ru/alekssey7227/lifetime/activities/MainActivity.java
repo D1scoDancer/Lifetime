@@ -12,13 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.DBHelper;
+import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         // Добавление новой цели
         if (item.getItemId() == R.id.app_bar_add_goal) {
+
+           // TODO: call dialog here
+            GoalDialogFragment.display(getSupportFragmentManager());
+
+
             SQLiteDatabase database = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
 
