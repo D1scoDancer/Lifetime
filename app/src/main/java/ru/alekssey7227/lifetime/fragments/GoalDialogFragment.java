@@ -48,7 +48,7 @@ public class GoalDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         toolbar.setNavigationOnClickListener(v -> dismiss());
-        toolbar.setTitle("Some title");
+        toolbar.setTitle("Creating Goal");
         toolbar.inflateMenu(R.menu.goal_dialog_menu);
         toolbar.setOnMenuItemClickListener(item -> {
             dismiss();

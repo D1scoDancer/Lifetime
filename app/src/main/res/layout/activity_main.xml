@@ -26,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="" />
+            app:layout_collapseMode="pin" />
 
 
     </com.google.android.material.appbar.AppBarLayout>

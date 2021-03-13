@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Добавление новой цели
         if (item.getItemId() == R.id.app_bar_add_goal) {
 
-           // TODO: call dialog here
+            // TODO: call dialog here
             GoalDialogFragment.display(getSupportFragmentManager());
 
 
