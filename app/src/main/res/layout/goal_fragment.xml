@@ -45,7 +45,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_toEndOf="@id/et_Name"
-            android:src="@drawable/ic_palete"/>
+            android:id="@+id/iv_palette"
+            android:src="@drawable/ic_palette"/>
 
 
         <EditText

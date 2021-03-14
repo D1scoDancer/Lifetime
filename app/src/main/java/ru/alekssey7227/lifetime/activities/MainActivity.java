@@ -1,6 +1,5 @@
 package ru.alekssey7227.lifetime.activities;
 
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,28 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         // Добавление новой цели
         if (item.getItemId() == R.id.app_bar_add_goal) {
-
-            // TODO: call dialog here
-            GoalDialogFragment.display(getSupportFragmentManager());
-
-
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-
-            contentValues.put(DBHelper.KEY_NAME, "C#");
-            contentValues.put(DBHelper.KEY_TIME, "1000");
-            contentValues.put(DBHelper.KEY_ITERATION, "120");
-
-            database.insert(DBHelper.TABLE_GOALS, null, contentValues);
-
-            rvUpdate();
+            GoalDialogFragment.display(getSupportFragmentManager(), this);
         } else {
             return super.onOptionsItemSelected(item);
         }
         return true;
     }
 
-    private void rvUpdate() {
+    public void rvUpdate() {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         List<Goal> goals = dbHelper.readAllGoals(database);
 
