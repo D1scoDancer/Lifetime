@@ -1,6 +1,10 @@
 package ru.alekssey7227.lifetime.backend;
 
+import android.util.Log;
+
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class Goal {
     private static long DEFAULT_ITERATION = 60;
@@ -69,10 +73,12 @@ public class Goal {
         this.iteration = iteration;
     }
 
-    public double getTimeInHours() {
-        DecimalFormat df = new DecimalFormat("#.##");
-        String s = df.format(time / 60.0);
-        return Double.parseDouble(s);
+    public String getTimeInHours() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("0.##", symbols);
+
+        return df.format(time / 60.0);
     }
 
     @Override

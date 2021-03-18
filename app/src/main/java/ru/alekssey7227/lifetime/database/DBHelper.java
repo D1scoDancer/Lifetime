@@ -32,7 +32,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO: compute constant value of ...
         db.execSQL("create table " + TABLE_GOALS + "(" + KEY_ID
                 + " integer primary key, " + KEY_NAME + " text, " + KEY_TIME + " integer, "
                 + KEY_ITERATION + " integer" + ")");
@@ -90,7 +89,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void deleteGoal(SQLiteDatabase db, Goal goal) {
-        int delCount = db.delete(TABLE_GOALS, KEY_ID + "=" + goal.getId(), null); //TODO: выбрать лучший способ проверки
+        int delCount = db.delete(TABLE_GOALS, KEY_ID + "=" + goal.getId(), null);
 
         Log.d("mLog", "deleted rows count = " + delCount);
     }

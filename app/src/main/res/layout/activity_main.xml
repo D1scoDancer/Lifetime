@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <!--    TODO: try behavior-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/goalsRV"
         android:layout_width="match_parent"

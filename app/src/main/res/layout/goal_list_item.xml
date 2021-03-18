@@ -21,7 +21,6 @@
             android:layout_marginStart="1dp"
             android:src="@drawable/ic_launcher_background" />
 
-<!--        TODO: align to bottom-->
         <TextView
             android:id="@+id/txtName"
             android:layout_width="150dp"

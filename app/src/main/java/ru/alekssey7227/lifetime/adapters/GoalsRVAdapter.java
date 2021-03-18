@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.backend.Goal;
@@ -30,7 +32,7 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_list_item, parent, false); //TODO: try true, null
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_list_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
 
         return holder;
@@ -40,12 +42,9 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtName.setText(goals.get(position).getName());
-        holder.txtTime.setText(Double.toString(goals.get(position).getTime()));  //TODO: fix
-
-
+        holder.txtTime.setText(goals.get(position).getTimeInHours());  //TODO: fix
 
         holder.parent.setOnClickListener(v -> Toast.makeText(v.getContext(), goals.get(position).toString(), Toast.LENGTH_SHORT).show());
-
     }
 
     @Override
