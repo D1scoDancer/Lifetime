@@ -47,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public long addGoal(SQLiteDatabase db, Goal goal) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, goal.getName());
-        contentValues.put(KEY_TIME, goal.getTime());
+        contentValues.put(KEY_TIME, goal.getTime().getTimeInMinutes());
         contentValues.put(KEY_ITERATION, goal.getIteration());
 
         return db.insert(TABLE_GOALS, null, contentValues);
@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateGoal(SQLiteDatabase db, Goal oldGoal, Goal newGoal) { //TODO: возвращать int?
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, newGoal.getName());
-        contentValues.put(KEY_TIME, newGoal.getTime());
+        contentValues.put(KEY_TIME, newGoal.getTime().getTimeInMinutes());
         contentValues.put(KEY_ITERATION, newGoal.getIteration());
 
         int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(oldGoal.getId())});
