@@ -1,11 +1,11 @@
 package ru.alekssey7227.lifetime.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.alekssey7227.lifetime.R;
+import ru.alekssey7227.lifetime.activities.GoalActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
 
 
 public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHolder> {
+
+    public static final String MAIN_ACTIVITY_EXTRA = "id";
 
     private List<Goal> goals = new ArrayList<>();
 
@@ -42,7 +45,16 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
         holder.txtName.setText(goals.get(position).getName());
         holder.txtTime.setText(goals.get(position).getTime().getTimeInHoursString());
 
-        holder.parent.setOnClickListener(v -> Toast.makeText(v.getContext(), goals.get(position).toString(), Toast.LENGTH_SHORT).show());
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { // call GoalActivity
+                int id = goals.get(position).getId();
+                Intent intent = new Intent(v.getContext(), GoalActivity.class);
+                intent.putExtra(MAIN_ACTIVITY_EXTRA, id);
+                v.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override
