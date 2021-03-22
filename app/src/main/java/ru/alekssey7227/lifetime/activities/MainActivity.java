@@ -19,7 +19,7 @@ import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.DBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private RecyclerView goalsRV;
@@ -65,10 +65,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setGoals(goals);
         goalsRV.setAdapter(adapter);
         goalsRV.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
