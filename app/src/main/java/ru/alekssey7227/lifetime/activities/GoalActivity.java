@@ -8,9 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.List;
-import java.util.Optional;
-
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
@@ -20,6 +17,8 @@ public class GoalActivity extends AppCompatActivity {
 
     private Toolbar gToolBar;
     private TextView txtGoalName;
+    private TextView txtGoalTime;
+    private TextView txtGoalIteration;
 
     private DBHelper dbHelper;
     private Goal goal;
@@ -36,10 +35,18 @@ public class GoalActivity extends AppCompatActivity {
 
         gToolBar = findViewById(R.id.goal_toolbar);
         setSupportActionBar(gToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         txtGoalName = findViewById(R.id.txtGoalName);
-        if (goal != null)
+        txtGoalTime = findViewById(R.id.txtGoalTime);
+        txtGoalIteration = findViewById(R.id.txtGoalIteration);
+
+        if (goal != null) {
             txtGoalName.setText(goal.getName());
+            txtGoalTime.setText(goal.getTime().getTimeInHoursString());
+            txtGoalIteration.setText(Long.toString(goal.getIteration())); // TODO: fix
+        }
 
 
     }
