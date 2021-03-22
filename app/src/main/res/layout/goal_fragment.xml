@@ -95,35 +95,6 @@
             android:layout_below="@id/text_input_iteration"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_launcher_background" />
-
-
-        <com.bitvale.switcher.SwitcherX
-            android:id="@+id/time_switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_input_name"
-            app:switcher_icon_color="@color/white"
-            app:switcher_off_color="#ff4651"
-            app:switcher_on_color="#48ea8b"
-            android:layout_toEndOf="@id/text_input_time"
-            android:elevation="4dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"/>
-
-        <com.bitvale.switcher.SwitcherX
-            android:id="@+id/iteration_switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_input_time"
-            app:switcher_icon_color="@color/white"
-            app:switcher_off_color="#ff4651"
-            app:switcher_on_color="#48ea8b"
-            android:layout_toEndOf="@id/text_input_time"
-            android:elevation="4dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp" />
-
-
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
