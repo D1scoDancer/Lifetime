@@ -98,7 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Goal getById(SQLiteDatabase db, int id) {
         Goal goal = null;
 
-        Cursor cursor = db.query(TABLE_GOALS, null, "_id = ?", new String[] {Integer.toString(id)},
+        Cursor cursor = db.query(TABLE_GOALS, null, KEY_ID + " = ?", new String[] {Integer.toString(id)},
                 null, null, null);
 
         if(cursor.moveToFirst()){
