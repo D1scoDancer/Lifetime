@@ -1,12 +1,28 @@
 package ru.alekssey7227.lifetime.activities;
 
-import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import java.util.List;
+import java.util.Optional;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
+import ru.alekssey7227.lifetime.backend.Goal;
+import ru.alekssey7227.lifetime.database.DBHelper;
 
-public class GoalActivity extends Activity {
+public class GoalActivity extends AppCompatActivity {
+
+    private Toolbar gToolBar;
+    private TextView txtGoalName;
+
+    private DBHelper dbHelper;
+    private Goal goal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,5 +30,24 @@ public class GoalActivity extends Activity {
         setContentView(R.layout.activity_goal);
 
         int id = getIntent().getIntExtra(GoalsRVAdapter.MAIN_ACTIVITY_EXTRA, 0);
+        dbHelper = new DBHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        goal = dbHelper.getById(database, id);
+
+        gToolBar = findViewById(R.id.goal_toolbar);
+        setSupportActionBar(gToolBar);
+
+        txtGoalName = findViewById(R.id.txtGoalName);
+        if (goal != null)
+            txtGoalName.setText(goal.getName());
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.goal_menu, menu);
+        return true;
     }
 }
