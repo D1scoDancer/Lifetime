@@ -71,6 +71,10 @@ public class Goal {
         this.iteration = iteration;
     }
 
+    public void increment() {
+        time.setTimeInMinutes(time.getTimeInMinutes() + iteration.getTimeInMinutes());
+    }
+
     @Override
     public String toString() {
         return "Goal{" +

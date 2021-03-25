@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         List<Goal> goals = dbHelper.readAllGoals(database);
 
-        GoalsRVAdapter adapter = new GoalsRVAdapter();
+        GoalsRVAdapter adapter = new GoalsRVAdapter(this);
         adapter.setGoals(goals);
         goalsRV.setAdapter(adapter);
         goalsRV.setLayoutManager(new LinearLayoutManager(this));

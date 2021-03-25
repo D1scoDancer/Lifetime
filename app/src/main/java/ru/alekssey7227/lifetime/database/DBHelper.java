@@ -69,13 +69,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return goalList;
     }
 
-    public void updateGoal(SQLiteDatabase db, Goal oldGoal, Goal newGoal) { //TODO: возвращать int?
+    public void updateGoal(SQLiteDatabase db, Goal goal) { //TODO: возвращать int?
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_NAME, newGoal.getName());
-        contentValues.put(KEY_TIME, newGoal.getTime().getTimeInMinutes());
-        contentValues.put(KEY_ITERATION, newGoal.getIteration().getTimeInMinutes());
+        contentValues.put(KEY_NAME, goal.getName());
+        contentValues.put(KEY_TIME, goal.getTime().getTimeInMinutes());
+        contentValues.put(KEY_ITERATION, goal.getIteration().getTimeInMinutes());
 
-        int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(oldGoal.getId())});
+        int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(goal.getId())});
 
         Log.d("mLog", "updates row count = " + updCount);
     }
