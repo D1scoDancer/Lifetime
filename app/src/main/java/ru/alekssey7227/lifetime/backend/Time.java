@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+//TODO: getProperTime() - класс сам определяет в каком формате вернуть время
 public class Time {
 
     private static final DecimalFormat decimalFormat;
@@ -47,15 +48,15 @@ public class Time {
     }
 
     public String getTimeInMinutesString() {
-        return decimalFormat.format(minutes);
+        return decimalFormat.format(minutes) + " m";
     }
 
     public String getTimeInHoursString() {
-        return decimalFormat.format(getTimeInHours());
+        return decimalFormat.format(getTimeInHours()) + " h";
     }
 
     public String getTimeInDaysString() {
-        return decimalFormat.format(getTimeInDays());
+        return decimalFormat.format(getTimeInDays()) + " d";
     }
 
     @NonNull
