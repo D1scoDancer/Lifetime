@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, goal.getName());
         contentValues.put(KEY_TIME, goal.getTime().getTimeInMinutes());
-        contentValues.put(KEY_ITERATION, goal.getIteration());
+        contentValues.put(KEY_ITERATION, goal.getIteration().getTimeInMinutes());
 
         return db.insert(TABLE_GOALS, null, contentValues);
     }
@@ -82,7 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, newGoal.getName());
         contentValues.put(KEY_TIME, newGoal.getTime().getTimeInMinutes());
-        contentValues.put(KEY_ITERATION, newGoal.getIteration());
+        contentValues.put(KEY_ITERATION, newGoal.getIteration().getTimeInMinutes());
 
         int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(oldGoal.getId())});
 

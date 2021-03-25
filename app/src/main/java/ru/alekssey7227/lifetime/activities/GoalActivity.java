@@ -45,7 +45,7 @@ public class GoalActivity extends AppCompatActivity {
         if (goal != null) {
             txtGoalName.setText(goal.getName());
             txtGoalTime.setText(goal.getTime().getTimeInHoursString());
-            txtGoalIteration.setText(Long.toString(goal.getIteration())); // TODO: fix
+            txtGoalIteration.setText(goal.getIteration().getTimeInHoursString()); // TODO: fix
         }
 
 

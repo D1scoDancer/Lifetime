@@ -59,7 +59,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Time"
+                android:hint="Time (in hours)"
                 android:inputType="number|numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Iteration"
+                android:hint="Iteration (in hours)"
                 android:inputType="number|numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>

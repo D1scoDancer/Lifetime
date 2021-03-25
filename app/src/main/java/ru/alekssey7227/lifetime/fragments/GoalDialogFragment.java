@@ -102,8 +102,10 @@ public class GoalDialogFragment extends DialogFragment {
         ContentValues contentValues = new ContentValues();
 
         String name = text_input_name.getEditText().getText().toString();
-        String time = text_input_time.getEditText().getText().toString();
-        String iteration = text_input_iteration.getEditText().getText().toString();
+        double timeInHours = Double.parseDouble(text_input_time.getEditText().getText().toString());
+        String time = Double.toString(timeInHours * 60);
+        double iterationInHours = Double.parseDouble(text_input_iteration.getEditText().getText().toString());
+        String iteration = Double.toString(iterationInHours * 60);
 
         contentValues.put(DBHelper.KEY_NAME, name);
         contentValues.put(DBHelper.KEY_TIME, time);
