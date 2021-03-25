@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,8 +48,12 @@ public class GoalActivity extends AppCompatActivity {
             txtGoalTime.setText(goal.getTime().getTimeInHoursString());
             txtGoalIteration.setText(goal.getIteration().getTimeInHoursString()); // TODO: fix
         }
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "Destroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 
     @Override
