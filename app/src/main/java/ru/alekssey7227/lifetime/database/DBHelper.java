@@ -45,15 +45,6 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addGoal(SQLiteDatabase db, Goal goal) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_NAME, goal.getName());
-        contentValues.put(KEY_TIME, goal.getTime().getTimeInMinutes());
-        contentValues.put(KEY_ITERATION, goal.getIteration().getTimeInMinutes());
-
-        return db.insert(TABLE_GOALS, null, contentValues);
-    }
-
     public List<Goal> readAllGoals(SQLiteDatabase db) {
         List<Goal> goalList = new ArrayList<>();
 
