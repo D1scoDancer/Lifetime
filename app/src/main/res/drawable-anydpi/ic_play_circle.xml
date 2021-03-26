@@ -3,7 +3,6 @@
     android:height="40dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-<!--    TODO: what is viewport-->
     android:tint="#000000"
     android:alpha="0.8">
   <path
