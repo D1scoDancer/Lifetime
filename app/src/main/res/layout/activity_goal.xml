@@ -58,32 +58,41 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
-                />
+                android:format="00:00:00"/>
 
             <ImageButton
-                android:id="@+id/btn_startPauseChronometer"
+                android:id="@+id/btn_startChronometer"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_play_circle"
                 android:layout_below="@id/iv_temp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@id/chronometer"
                 android:background="#fff"
-                android:layout_toStartOf="@id/chronometer"/>
+                android:src="@drawable/ic_play_circle" />
+
+            <ImageButton
+                android:id="@+id/btn_pauseChronometer"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/iv_temp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@id/chronometer"
+                android:background="#fff"
+                android:src="@drawable/ic_pause_circle"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/btn_stopChronometer"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_stop_circle"
                 android:layout_below="@id/iv_temp"
-                android:layout_marginTop="15dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@id/chronometer"
                 android:background="#fff"
-                android:layout_toEndOf="@id/chronometer"/>
-
-
-
+                android:src="@drawable/ic_stop_circle" />
 
             <TextView
                 android:id="@+id/txtGoalTimeLabel"
