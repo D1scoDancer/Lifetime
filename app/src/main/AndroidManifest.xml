@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Lifetime">
         <activity
             android:name=".activities.GoalActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
