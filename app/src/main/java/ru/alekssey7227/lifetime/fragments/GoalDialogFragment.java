@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,20 +19,28 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.MainActivity;
+import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.DBHelper;
 
 public class GoalDialogFragment extends DialogFragment {
 
     public static final String TAG = "GoalDialogFragment";
 
+    private static Goal _goal;
+
     private Toolbar toolbar;
-    private static MainActivity mainActivity;
 
     TextInputLayout text_input_name, text_input_time, text_input_iteration;
 
-    public static GoalDialogFragment display(FragmentManager fragmentManager, MainActivity activity) {
-        mainActivity = activity;
+    public static GoalDialogFragment display(FragmentManager fragmentManager) {
+        _goal = null;
+        GoalDialogFragment goalDialogFragment = new GoalDialogFragment();
+        goalDialogFragment.show(fragmentManager, TAG);
+        return goalDialogFragment;
+    }
 
+    public static GoalDialogFragment display(FragmentManager fragmentManager, Goal goal) {
+        _goal = goal;
         GoalDialogFragment goalDialogFragment = new GoalDialogFragment();
         goalDialogFragment.show(fragmentManager, TAG);
         return goalDialogFragment;
@@ -62,26 +69,47 @@ public class GoalDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fillFields();
 
         toolbar.setNavigationOnClickListener(v ->
                 dismiss());
-        toolbar.setTitle("Creating Goal");
         toolbar.inflateMenu(R.menu.goal_dialog_menu);
-        // добавление новой цели в БД
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (validateInput()) {
-                SQLiteOpenHelper dbHelper = new DBHelper(getContext());
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
-                ContentValues contentValues = getInput();
-                database.insert(DBHelper.TABLE_GOALS, null, contentValues);
-                mainActivity.rvUpdate();
-                dismiss();
-                return true;
-            } else {
-                return false;
-            }
-        });
+
+        if (_goal == null) {
+            toolbar.setTitle("Creating Goal");
+            // добавление новой цели в БД
+            toolbar.setOnMenuItemClickListener(item -> {
+                if (validateInput()) {
+                    SQLiteOpenHelper dbHelper = new DBHelper(getContext());
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    ContentValues contentValues = getInput();
+                    database.insert(DBHelper.TABLE_GOALS, null, contentValues);
+                    MainActivity.getInstance().rvUpdate();
+                    dismiss();
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        } else {
+            toolbar.setTitle("Editing Goal");
+            // редактирование цели в БД
+            toolbar.setOnMenuItemClickListener(item -> {
+                if (validateInput()) {
+                    DBHelper dbHelper = new DBHelper(getContext());
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    changeGoal();
+                    dbHelper.updateGoal(db, _goal);
+                    MainActivity.getInstance().rvUpdate();
+                    dismiss();
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
     }
+
 
     @Override
     public void onStart() {
@@ -93,6 +121,16 @@ public class GoalDialogFragment extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
             dialog.getWindow().setWindowAnimations(R.style.AppTheme_Slide);
         }
+    }
+
+    private void changeGoal() {
+        String name = text_input_name.getEditText().getText().toString();
+        double timeInHours = Double.parseDouble(text_input_time.getEditText().getText().toString());
+        double iterationInHours = Double.parseDouble(text_input_iteration.getEditText().getText().toString());
+
+        _goal.setName(name);
+        _goal.getTime().setTimeInHours(timeInHours);
+        _goal.getIteration().setTimeInHours(iterationInHours);
     }
 
     private ContentValues getInput() {
@@ -145,6 +183,20 @@ public class GoalDialogFragment extends DialogFragment {
         } else {
             text_input_iteration.setError(null);
             return true;
+        }
+    }
+
+    private void fillFields() {
+        if (_goal != null) {
+            if (text_input_name != null) {
+                text_input_name.getEditText().setText(_goal.getName());
+            }
+            if (text_input_time != null) {
+                text_input_time.getEditText().setText(_goal.getTime().getTimeInHoursString());
+            }
+            if (text_input_iteration != null) {
+                text_input_iteration.getEditText().setText(_goal.getIteration().getTimeInHoursString());
+            }
         }
     }
 }
