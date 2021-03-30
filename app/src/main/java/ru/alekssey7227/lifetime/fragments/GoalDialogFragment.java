@@ -30,7 +30,6 @@ public class GoalDialogFragment extends DialogFragment {
     private static MainActivity mainActivity;
 
     TextInputLayout text_input_name, text_input_time, text_input_iteration;
-    ImageView iv_palette, iv_icon_chooser;
 
     public static GoalDialogFragment display(FragmentManager fragmentManager, MainActivity activity) {
         mainActivity = activity;
