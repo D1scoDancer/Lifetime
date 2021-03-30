@@ -48,7 +48,7 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtName.setText(goals.get(position).getName());
-        holder.txtTime.setText(goals.get(position).getTime().getTimeInHoursString());
+        holder.txtTime.setText(goals.get(position).getTime().getTimeInHoursStringFormatted());
 
         holder.parent.setOnClickListener(v -> { // call GoalActivity
             int id = goals.get(position).getId();
