@@ -78,23 +78,6 @@
                 android:inputType="number|numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/iv_palette"-->
-        <!--            android:layout_width="25dp"-->
-        <!--            android:layout_height="25dp"-->
-        <!--            android:layout_marginLeft="20dp"-->
-        <!--            android:layout_marginTop="30dp"-->
-        <!--            android:layout_toEndOf="@id/text_input_name"-->
-        <!--            android:src="@drawable/ic_palette" />-->
-
-        <ImageView
-            android:id="@+id/iv_icon_chooser"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@id/text_input_iteration"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_launcher_background" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
