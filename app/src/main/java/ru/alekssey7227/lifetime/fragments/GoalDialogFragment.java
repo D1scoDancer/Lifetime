@@ -56,8 +56,6 @@ public class GoalDialogFragment extends DialogFragment {
         text_input_name = view.findViewById(R.id.text_input_name);
         text_input_time = view.findViewById(R.id.text_input_time);
         text_input_iteration = view.findViewById(R.id.text_input_iteration);
-//        iv_palette = view.findViewById(R.id.iv_palette);
-        iv_icon_chooser = view.findViewById(R.id.iv_icon_chooser);
 
         return view;
     }
