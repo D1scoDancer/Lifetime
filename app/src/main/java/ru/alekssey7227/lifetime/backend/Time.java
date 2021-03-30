@@ -13,7 +13,7 @@ public class Time {
 
     private long minutes;
 
-    static  {
+    static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
         symbols.setDecimalSeparator('.');
         decimalFormat = new DecimalFormat("0.##", symbols);
@@ -35,8 +35,8 @@ public class Time {
         return minutes / 60.0;
     }
 
-    public void setTimeInHours(long hours) {
-        this.minutes = hours * 60;
+    public void setTimeInHours(double hours) {
+        this.minutes = (long) hours * 60;
     }
 
     public double getTimeInDays() {
@@ -48,15 +48,27 @@ public class Time {
     }
 
     public String getTimeInMinutesString() {
-        return decimalFormat.format(minutes) + " m";
+        return decimalFormat.format(minutes);
     }
 
     public String getTimeInHoursString() {
-        return decimalFormat.format(getTimeInHours()) + " h";
+        return decimalFormat.format(getTimeInHours());
     }
 
     public String getTimeInDaysString() {
-        return decimalFormat.format(getTimeInDays()) + " d";
+        return decimalFormat.format(getTimeInDays());
+    }
+
+    public String getTimeInMinutesStringFormatted() {
+        return decimalFormat.format(minutes) + " m";
+    }
+
+    public String getTimeInHoursStringFormatted() {
+        return decimalFormat.format(getTimeInHours()) + " h";
+    }
+
+    public String getTimeInDaysStringFormatted() {
+        return decimalFormat.format(getTimeInDays() + " d");
     }
 
     @NonNull
