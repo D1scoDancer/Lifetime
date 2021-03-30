@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,10 +25,17 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView goalsRV;
     private DBHelper dbHelper;
 
+    private static MainActivity instance;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        instance = this;
 
         mToolBar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolBar);
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Добавление новой цели
         if (item.getItemId() == R.id.app_bar_add_goal) {
-            GoalDialogFragment.display(getSupportFragmentManager(), this);
+            GoalDialogFragment.display(getSupportFragmentManager());
         } else {
             return super.onOptionsItemSelected(item);
         }
