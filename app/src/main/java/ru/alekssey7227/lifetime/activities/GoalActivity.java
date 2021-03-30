@@ -17,10 +17,6 @@ import ru.alekssey7227.lifetime.database.DBHelper;
 public class GoalActivity extends AppCompatActivity {
 
     private Toolbar gToolBar;
-    private TextView txtGoalName;
-    private TextView txtGoalTime;
-    private TextView txtGoalIteration;
-
     private DBHelper dbHelper;
     private Goal goal;
 
@@ -38,22 +34,6 @@ public class GoalActivity extends AppCompatActivity {
         setSupportActionBar(gToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        txtGoalName = findViewById(R.id.txtGoalName);
-        txtGoalTime = findViewById(R.id.txtGoalTime);
-        txtGoalIteration = findViewById(R.id.txtGoalIteration);
-
-        if (goal != null) {
-            txtGoalName.setText(goal.getName());
-            txtGoalTime.setText(goal.getTime().getTimeInHoursString());
-            txtGoalIteration.setText(goal.getIteration().getTimeInHoursString()); // TODO: fix
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        Toast.makeText(this, "Destroy", Toast.LENGTH_SHORT).show();
-        super.onDestroy();
     }
 
     @Override
