@@ -23,19 +23,20 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+            android:id="@+id/gl_v_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="35dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
+            android:id="@+id/gl_h_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -61,8 +62,8 @@
             android:layout_height="wrap_content"
             android:text="Total Time: "
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintStart_toStartOf="@+id/gl_v_1"
+            app:layout_constraintTop_toTopOf="@+id/gl_h_1" />
 
         <TextView
             android:id="@+id/txtGATime"
@@ -73,7 +74,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtGATimeLabel"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/gl_h_1" />
 
         <TextView
             android:id="@+id/txtGAIterationLabel"
@@ -82,7 +83,7 @@
             android:layout_marginTop="50dp"
             android:text="Incrementation:"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/gl_v_1"
             app:layout_constraintTop_toBottomOf="@+id/txtGATimeLabel" />
 
         <TextView
@@ -95,7 +96,60 @@
             app:layout_constraintEnd_toEndOf="@+id/txtGATime"
             app:layout_constraintTop_toBottomOf="@+id/txtGATime" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="257dp" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:format="00:00:00"
+            android:text="00:00"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gl_h2" />
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Start"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/chronometer"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer" />
+
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Stop"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/chronometer"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer" />
+
+        <Button
+            android:id="@+id/btnPause"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Pause"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/btnStop"
+            app:layout_constraintStart_toEndOf="@+id/btnStart"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
