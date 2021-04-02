@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,9 @@ public class GoalDialogFragment extends DialogFragment {
 
     private Toolbar toolbar;
 
-    TextInputLayout text_input_name, text_input_time, text_input_iteration;
+    private TextInputLayout text_input_name, text_input_time, text_input_iteration;
+
+    private ImageView iv_goalIcon;
 
     public static GoalDialogFragment display(FragmentManager fragmentManager) {
         _goal = null;
@@ -62,6 +65,7 @@ public class GoalDialogFragment extends DialogFragment {
         text_input_name = view.findViewById(R.id.text_input_name);
         text_input_time = view.findViewById(R.id.text_input_time);
         text_input_iteration = view.findViewById(R.id.text_input_iteration);
+        iv_goalIcon = view.findViewById(R.id.iv_goalIcon);
 
         return view;
     }
@@ -70,6 +74,11 @@ public class GoalDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fillFields();
+
+        // Смена иконки цели
+        iv_goalIcon.setOnClickListener(v -> {
+            
+        });
 
         toolbar.setNavigationOnClickListener(v ->
                 dismiss());
