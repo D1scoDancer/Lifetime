@@ -75,9 +75,9 @@ public class GoalDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         fillFields();
 
-        // Смена иконки цели
+        // TODO: Смена иконки цели
         iv_goalIcon.setOnClickListener(v -> {
-            
+            IconDialogFragment.display(getFragmentManager());
         });
 
         toolbar.setNavigationOnClickListener(v ->
