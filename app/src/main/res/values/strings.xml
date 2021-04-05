@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">Lifetime</string>
+
+    <string-array name="goal_icons">
+        <item>@drawable/ga_1_working</item>
+        <item>@drawable/ga_3_brain</item>
+        <item>@drawable/ga_2_lotus_position</item>
+        <item>@drawable/ga_1_basketball</item>
+        <item>@drawable/ga_1_pool</item>
+        <item>@drawable/ga_2_sleep</item>
+        <item>@drawable/ga_3_calculator</item>
+        <item>@drawable/ga_3_computer</item>
+        <item>@drawable/ga_1_boxing</item>
+        <item>@drawable/ga_1_cycling</item>
+        <item>@drawable/ga_1_football</item>
+        <item>@drawable/ga_1_medal</item>
+        <item>@drawable/ga_2_weight</item>
+        <item>@drawable/ga_4_coin</item>
+        <item>@drawable/ga_3_graduate</item>
+        <item>@drawable/ga_1_chess</item>
+        <item>@drawable/ga_1_color_palette</item>
+        <item>@drawable/ga_1_flower</item>
+        <item>@drawable/ga_1_clapperboard</item>
+        <item>@drawable/ga_3_telescope</item>
+        <item>@drawable/ga_1_singing</item>
+        <item>@drawable/ga_1_playing_cards</item>
+        <item>@drawable/ga_2_running</item>
+        <item>@drawable/ga_3_compass</item>
+        <item>@drawable/ga_1_reading</item>
+    </string-array>
+
 </resources>
