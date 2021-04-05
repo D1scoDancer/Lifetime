@@ -36,6 +36,8 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
 
     private ImageView iv_goalIcon;
 
+    private int imagePosition;
+
     public static GoalDialogFragment display(FragmentManager fragmentManager) {
         _goal = null;
         GoalDialogFragment goalDialogFragment = new GoalDialogFragment();
@@ -76,6 +78,13 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         super.onViewCreated(view, savedInstanceState);
         fillFields();
 
+        TypedArray icons = getContext().getResources().obtainTypedArray(R.array.goal_icons);
+        if(_goal == null){
+            iv_goalIcon.setImageDrawable(icons.getDrawable(0));
+        } else{
+            iv_goalIcon.setImageDrawable(icons.getDrawable(_goal.getImage()));
+        }
+        
         // TODO: Смена иконки цели
         iv_goalIcon.setOnClickListener(v -> {
             IconDialogFragment.display(getFragmentManager(), this);
@@ -141,6 +150,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         _goal.setName(name);
         _goal.getTime().setTimeInHours(timeInHours);
         _goal.getIteration().setTimeInHours(iterationInHours);
+        _goal.setImage(imagePosition);
     }
 
     private ContentValues getInput() {
@@ -155,6 +165,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         contentValues.put(DBHelper.KEY_NAME, name);
         contentValues.put(DBHelper.KEY_TIME, time);
         contentValues.put(DBHelper.KEY_ITERATION, iteration);
+        contentValues.put(DBHelper.KEY_IMAGE, imagePosition);
 
         return contentValues;
     }
@@ -214,5 +225,6 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     public void onEvent(int position) {
         TypedArray icons = getContext().getResources().obtainTypedArray(R.array.goal_icons);
         iv_goalIcon.setImageDrawable(icons.getDrawable(position));
+        imagePosition = position;
     }
 }

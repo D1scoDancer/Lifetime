@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KEY_NAME = "name";
     public static final String KEY_TIME = "time";
     public static final String KEY_ITERATION = "iteration";
+    public static final String KEY_IMAGE = "image";
 
 
     public DBHelper(@Nullable Context context) {
@@ -35,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_GOALS + "(" + KEY_ID
                 + " integer primary key, " + KEY_NAME + " text, " + KEY_TIME + " integer, "
-                + KEY_ITERATION + " integer" + ")");
+                + KEY_ITERATION + " integer, " + KEY_IMAGE + " integer" + ")");
     }
 
     @Override
@@ -56,10 +57,11 @@ public class DBHelper extends SQLiteOpenHelper {
             int nameIndex = cursor.getColumnIndex(KEY_NAME);
             int timeIndex = cursor.getColumnIndex(KEY_TIME);
             int iterationIndex = cursor.getColumnIndex(KEY_ITERATION);
+            int imageIndex = cursor.getColumnIndex(KEY_IMAGE);
 
             do {
                 Goal goal = new Goal(cursor.getInt(idIndex), cursor.getString(nameIndex),
-                        cursor.getInt(timeIndex), cursor.getInt(iterationIndex));
+                        cursor.getInt(timeIndex), cursor.getInt(iterationIndex), cursor.getInt(imageIndex));
 
                 goalList.add(goal);
             } while (cursor.moveToNext());
@@ -74,6 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_NAME, goal.getName());
         contentValues.put(KEY_TIME, goal.getTime().getTimeInMinutes());
         contentValues.put(KEY_ITERATION, goal.getIteration().getTimeInMinutes());
+        contentValues.put(KEY_IMAGE, goal.getImage());
 
         int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(goal.getId())});
 
@@ -97,9 +100,10 @@ public class DBHelper extends SQLiteOpenHelper {
             int nameIndex = cursor.getColumnIndex(KEY_NAME);
             int timeIndex = cursor.getColumnIndex(KEY_TIME);
             int iterationIndex = cursor.getColumnIndex(KEY_ITERATION);
+            int imageIndex = cursor.getColumnIndex(KEY_IMAGE);
 
             goal = new Goal(cursor.getInt(idIndex), cursor.getString(nameIndex),
-                    cursor.getInt(timeIndex), cursor.getInt(iterationIndex));
+                    cursor.getInt(timeIndex), cursor.getInt(iterationIndex), cursor.getInt(imageIndex));
         }
 
         cursor.close();

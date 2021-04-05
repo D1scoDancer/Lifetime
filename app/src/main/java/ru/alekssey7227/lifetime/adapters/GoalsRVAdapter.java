@@ -1,6 +1,7 @@
 package ru.alekssey7227.lifetime.adapters;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -49,6 +50,9 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtName.setText(goals.get(position).getName());
         holder.txtTime.setText(goals.get(position).getTime().getTimeInHoursStringFormatted());
+
+        TypedArray icons = mainActivity.getResources().obtainTypedArray(R.array.goal_icons);
+        holder.ivIcon.setImageDrawable(icons.getDrawable(goals.get(position).getImage()));
 
         holder.parent.setOnClickListener(v -> { // call GoalActivity
             int id = goals.get(position).getId();

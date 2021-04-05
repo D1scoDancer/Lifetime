@@ -11,18 +11,22 @@ public class Goal {
 
     private Time iteration;
 
-    public Goal(int id, String name, Time time, Time iteration) {
+    private int image;
+
+    public Goal(int id, String name, Time time, Time iteration, int image) {
         this.id = id;
         this.name = name;
         this.time = time;
         this.iteration = iteration;
+        this.image = image;
     }
 
-    public Goal(int id, String name, long time, long iteration){
+    public Goal(int id, String name, long time, long iteration, int image){
         this.id = id;
         this.name = name;
         this.time = new Time(time);
         this.iteration = new Time(iteration);
+        this.image = image;
     }
 
     public Goal(int id, String name, Time time) {
@@ -30,6 +34,7 @@ public class Goal {
         this.name = name;
         this.time = time;
         iteration = DEFAULT_ITERATION;
+        image = 0;
     }
 
     public Goal(int id) {
@@ -37,6 +42,7 @@ public class Goal {
         name = "Chess";
         time = new Time(0);
         iteration = DEFAULT_ITERATION;
+        image = 0;
     }
 
     public int getId() {
@@ -69,6 +75,14 @@ public class Goal {
 
     public void setIteration(Time iteration) {
         this.iteration = iteration;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public void increment() {
