@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.MainActivity;
+import ru.alekssey7227.lifetime.fragments.IconDialogFragment;
 
 public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHolder> {
 
@@ -20,8 +20,11 @@ public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHold
 
     private MainActivity mainActivity;
 
-    public IconsRVAdapter(MainActivity mainActivity) {
+    private IconDialogFragment iconDialogFragment;
+
+    public IconsRVAdapter(MainActivity mainActivity, IconDialogFragment iconDialogFragment) {
         this.mainActivity = mainActivity;
+        this.iconDialogFragment = iconDialogFragment;
         icons = mainActivity.getResources().obtainTypedArray(R.array.goal_icons);
     }
 
@@ -37,7 +40,7 @@ public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHold
         holder.iv_icon.setImageDrawable(icons.getDrawable(position));
 
         holder.parent.setOnClickListener(v -> {
-            // TODO: return intent with id and status OK and then IconFragment returns this id to GoalFragment and closes itself
+            ((Callback) iconDialogFragment).onEvent(position);
         });
 
     }
@@ -56,5 +59,9 @@ public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHold
             iv_icon = itemView.findViewById(R.id.iv_icon);
             parent = itemView.findViewById(R.id.icon_parent);
         }
+    }
+
+    public interface Callback {
+        void onEvent(int position);
     }
 }

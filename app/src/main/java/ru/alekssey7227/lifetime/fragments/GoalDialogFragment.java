@@ -2,6 +2,7 @@ package ru.alekssey7227.lifetime.fragments;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.DBHelper;
 
-public class GoalDialogFragment extends DialogFragment {
+public class GoalDialogFragment extends DialogFragment implements IconDialogFragment.CallBack {
 
     public static final String TAG = "GoalDialogFragment";
 
@@ -77,7 +78,7 @@ public class GoalDialogFragment extends DialogFragment {
 
         // TODO: Смена иконки цели
         iv_goalIcon.setOnClickListener(v -> {
-            IconDialogFragment.display(getFragmentManager());
+            IconDialogFragment.display(getFragmentManager(), this);
         });
 
         toolbar.setNavigationOnClickListener(v ->
@@ -207,5 +208,11 @@ public class GoalDialogFragment extends DialogFragment {
                 text_input_iteration.getEditText().setText(_goal.getIteration().getTimeInHoursString());
             }
         }
+    }
+
+    @Override
+    public void onEvent(int position) {
+        TypedArray icons = getContext().getResources().obtainTypedArray(R.array.goal_icons);
+        iv_goalIcon.setImageDrawable(icons.getDrawable(position));
     }
 }

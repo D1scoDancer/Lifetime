@@ -16,14 +16,16 @@ import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.adapters.IconsRVAdapter;
 
-public class IconDialogFragment extends DialogFragment {
+public class IconDialogFragment extends DialogFragment implements IconsRVAdapter.Callback {
 
     public static final String TAG = "IconDialogFragment";
 
     private RecyclerView iconsRV;
 
+    private static GoalDialogFragment goalDialogFragment;
 
-    public static IconDialogFragment display(FragmentManager fragmentManager){
+    public static IconDialogFragment display(FragmentManager fragmentManager, GoalDialogFragment goalDFt) {
+        goalDialogFragment = goalDFt;
         IconDialogFragment iconDialogFragment = new IconDialogFragment();
         iconDialogFragment.show(fragmentManager, TAG);
         return iconDialogFragment;
@@ -48,9 +50,25 @@ public class IconDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         iconsRV = view.findViewById(R.id.iconsRV);
-        IconsRVAdapter adapter = new IconsRVAdapter(MainActivity.getInstance());
+        IconsRVAdapter adapter = new IconsRVAdapter(MainActivity.getInstance(), this);
         iconsRV.setAdapter(adapter);
         iconsRV.setLayoutManager(new GridLayoutManager(view.getContext(), 5));
 
+    }
+
+    @Override
+    public void onDestroy() {
+        goalDialogFragment = null;
+        super.onDestroy();
+    }
+
+    @Override
+    public void onEvent(int position) {
+        ((CallBack) goalDialogFragment).onEvent(position);
+        dismiss();
+    }
+
+    public interface CallBack {
+        void onEvent(int position);
     }
 }
