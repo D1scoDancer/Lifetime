@@ -1,5 +1,8 @@
 package ru.alekssey7227.lifetime.backend;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import java.text.DecimalFormat;
@@ -36,7 +39,7 @@ public class Time {
     }
 
     public void setTimeInHours(double hours) {
-        this.minutes = (long) hours * 60;
+        this.minutes = (long) (hours * 60);
     }
 
     public double getTimeInDays() {

@@ -6,10 +6,12 @@ import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     public static final String TAG = "GoalDialogFragment";
 
     private static Goal _goal;
+    private static int imagePosition;
 
     private Toolbar toolbar;
 
@@ -36,10 +39,10 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
 
     private ImageView iv_goalIcon;
 
-    private int imagePosition;
 
     public static GoalDialogFragment display(FragmentManager fragmentManager) {
         _goal = null;
+        imagePosition = 0; // TODO: или последнее использованное изображение (удалить строку)
         GoalDialogFragment goalDialogFragment = new GoalDialogFragment();
         goalDialogFragment.show(fragmentManager, TAG);
         return goalDialogFragment;
@@ -47,6 +50,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
 
     public static GoalDialogFragment display(FragmentManager fragmentManager, Goal goal) {
         _goal = goal;
+        imagePosition = goal.getImage();
         GoalDialogFragment goalDialogFragment = new GoalDialogFragment();
         goalDialogFragment.show(fragmentManager, TAG);
         return goalDialogFragment;
@@ -79,11 +83,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         fillFields();
 
         TypedArray icons = getContext().getResources().obtainTypedArray(R.array.goal_icons);
-        if(_goal == null){
-            iv_goalIcon.setImageDrawable(icons.getDrawable(0));
-        } else{
-            iv_goalIcon.setImageDrawable(icons.getDrawable(_goal.getImage()));
-        }
+        iv_goalIcon.setImageDrawable(icons.getDrawable(imagePosition));
 
         // Смена иконки цели
         iv_goalIcon.setOnClickListener(v -> {
@@ -146,7 +146,6 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         String name = text_input_name.getEditText().getText().toString();
         double timeInHours = Double.parseDouble(text_input_time.getEditText().getText().toString());
         double iterationInHours = Double.parseDouble(text_input_iteration.getEditText().getText().toString());
-
         _goal.setName(name);
         _goal.getTime().setTimeInHours(timeInHours);
         _goal.getIteration().setTimeInHours(iterationInHours);
@@ -161,7 +160,6 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         String time = Double.toString(timeInHours * 60);
         double iterationInHours = Double.parseDouble(text_input_iteration.getEditText().getText().toString());
         String iteration = Double.toString(iterationInHours * 60);
-
         contentValues.put(DBHelper.KEY_NAME, name);
         contentValues.put(DBHelper.KEY_TIME, time);
         contentValues.put(DBHelper.KEY_ITERATION, iteration);
