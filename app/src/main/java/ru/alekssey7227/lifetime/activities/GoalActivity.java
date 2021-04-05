@@ -1,6 +1,7 @@
 package ru.alekssey7227.lifetime.activities;
 
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class GoalActivity extends AppCompatActivity {
     private TextView txtGAName;
     private TextView txtGATime;
     private TextView txtGAIteration;
+    private ImageView ivGAIcon;
 
     private Chronometer chronometer;
     private Button btnStart;
@@ -57,6 +60,7 @@ public class GoalActivity extends AppCompatActivity {
         txtGAName = findViewById(R.id.txtGANameLabel);
         txtGATime = findViewById(R.id.txtGATime);
         txtGAIteration = findViewById(R.id.txtGAIteration);
+        ivGAIcon = findViewById(R.id.ivGAIcon);
 
         chronometer = findViewById(R.id.chronometer);
         // Время, отображаемое хронометром
@@ -135,6 +139,8 @@ public class GoalActivity extends AppCompatActivity {
                 txtGAName.setText(goal.getName().toUpperCase());
                 txtGATime.setText(goal.getTime().getTimeInHoursStringFormatted());
                 txtGAIteration.setText(goal.getIteration().getTimeInHoursStringFormatted());
+                TypedArray icons = getResources().obtainTypedArray(R.array.goal_icons);
+                ivGAIcon.setImageDrawable(icons.getDrawable(goal.getImage()));
             }
         }
     }
