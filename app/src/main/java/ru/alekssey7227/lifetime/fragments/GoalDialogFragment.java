@@ -84,8 +84,8 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         } else{
             iv_goalIcon.setImageDrawable(icons.getDrawable(_goal.getImage()));
         }
-        
-        // TODO: Смена иконки цели
+
+        // Смена иконки цели
         iv_goalIcon.setOnClickListener(v -> {
             IconDialogFragment.display(getFragmentManager(), this);
         });
