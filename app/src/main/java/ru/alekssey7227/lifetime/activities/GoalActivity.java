@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +48,7 @@ public class GoalActivity extends AppCompatActivity {
     private long stopTime = 0;
     private boolean isRunning;
     private boolean isPaused;
+    private int goalId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,16 @@ public class GoalActivity extends AppCompatActivity {
         stopTime = preferences.getLong("stopTime", 0);
         isRunning = preferences.getBoolean("isRunning", false);
         isPaused = preferences.getBoolean("isPaused", false);
+        goalId = preferences.getInt("goalId", -1);
+
+        if (goalId != -1) {
+            if (goalId != goal.getId()) {
+                btnStart.setEnabled(false);
+                btnPause.setEnabled(false);
+                btnStop.setEnabled(false);
+                return;
+            }
+        }
 
         if (isRunning) {
             chronometer.start();
@@ -128,6 +141,12 @@ public class GoalActivity extends AppCompatActivity {
         editor.putLong("stopTime", stopTime);
         editor.putBoolean("isRunning", isRunning);
         editor.putBoolean("isPaused", isPaused);
+
+        if (!isPaused && !isRunning) {
+            editor.putInt("goalId", -1);
+        } else if (goalId == goal.getId() || goalId == -1) {
+            editor.putInt("goalId", goal.getId());
+        }
         editor.apply();
     }
 
@@ -192,6 +211,13 @@ public class GoalActivity extends AppCompatActivity {
     }
 
     public void onStopButton(View v) {
+        long elapsedTime;
+        if (isPaused) {
+            elapsedTime = stopTime - startTime;
+        } else {
+            elapsedTime = Calendar.getInstance().getTime().getTime() - startTime;
+        }
+
         stopTime = 0;
         startTime = 0;
         isRunning = false;
@@ -199,6 +225,15 @@ public class GoalActivity extends AppCompatActivity {
         chronometer.stop();
 
         chronometer.setText(String.format(Locale.ENGLISH, "%02d:%02d:%02d", 0, 0, 0));
+
+        long m = (elapsedTime) / 60000;
+        goal.getTime().setTimeInMinutes(goal.getTime().getTimeInMinutes() + m); // TODO: maybe метод внутри Time
+
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.updateGoal(db, goal);
+
+        txtGATime.setText(goal.getTime().getTimeInHoursStringFormatted());
 
         btnStart.setEnabled(true);
         btnPause.setEnabled(false);
