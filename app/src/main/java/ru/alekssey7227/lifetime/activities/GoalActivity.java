@@ -181,6 +181,13 @@ public class GoalActivity extends AppCompatActivity {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.deleteGoal(db, goal);
             MainActivity.getInstance().rvUpdate();
+
+            stopTime = 0;
+            startTime = 0;
+            isRunning = false;
+            isPaused = false;
+            chronometer.stop();
+
             finish();
         } else {
             return super.onOptionsItemSelected(item);
