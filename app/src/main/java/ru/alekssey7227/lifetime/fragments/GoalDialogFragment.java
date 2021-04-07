@@ -220,7 +220,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     }
 
     @Override
-    public void onEvent(int position) {
+    public void onIconChanged(int position) {
         TypedArray icons = getContext().getResources().obtainTypedArray(R.array.goal_icons);
         iv_goalIcon.setImageDrawable(icons.getDrawable(position));
         imagePosition = position;

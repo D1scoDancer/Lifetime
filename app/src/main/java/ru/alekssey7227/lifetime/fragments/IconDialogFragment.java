@@ -64,11 +64,11 @@ public class IconDialogFragment extends DialogFragment implements IconsRVAdapter
 
     @Override
     public void onEvent(int position) {
-        ((CallBack) goalDialogFragment).onEvent(position);
+        ((CallBack) goalDialogFragment).onIconChanged(position);
         dismiss();
     }
 
     public interface CallBack {
-        void onEvent(int position);
+        void onIconChanged(int position);
     }
 }
