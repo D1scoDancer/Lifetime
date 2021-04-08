@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_action_add_goal"
         android:title="Add"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/app_bar_settings"
-        android:title="Settings"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_settings"/>
 </menu>
