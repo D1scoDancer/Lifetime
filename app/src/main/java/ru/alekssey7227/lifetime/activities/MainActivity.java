@@ -1,11 +1,9 @@
 package ru.alekssey7227.lifetime.activities;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +15,9 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.List;
 
@@ -75,16 +69,29 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(mToolBar)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(home, statistics, new DividerDrawerItem(), settings)
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                    return true;
-                })
                 .withSelectedItem(-2)
                 .build();
 
 
         SecondaryDrawerItem footer = new SecondaryDrawerItem().withName("Made by Aleksey Shulikov").withSelectable(false);
         result.addStickyFooterItem(footer);
+
+        result.setOnDrawerItemClickListener((view, position, drawerItem) -> {
+            switch (position) {
+                case 1:
+                    result.closeDrawer();
+                    break;
+                case 2:
+                    Toast.makeText(this, "Statistics", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+                    Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        });
     }
 
     @Override

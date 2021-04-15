@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lifetime">
         <activity
+            android:name=".activities.StatsActivity"
+            android:label="@string/title_activity_stats"
+            android:theme="@style/Theme.Lifetime.NoActionBar"></activity>
+        <activity
             android:name=".activities.GoalActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MainActivity">
