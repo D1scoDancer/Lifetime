@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import ru.alekssey7227.lifetime.activities.R;
+import ru.alekssey7227.lifetime.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.activities;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -82,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
                     result.closeDrawer();
                     break;
                 case 2:
-                    Toast.makeText(this, "Statistics", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, StatsActivity.class);
+                    startActivity(intent);
                     break;
                 case 4:
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
