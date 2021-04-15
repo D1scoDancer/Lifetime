@@ -1,19 +1,18 @@
 package ru.alekssey7227.lifetime.activities;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.ui.main.SectionsPagerAdapter;
 
 public class StatsActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
