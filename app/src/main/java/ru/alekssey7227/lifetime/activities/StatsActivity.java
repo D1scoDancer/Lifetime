@@ -1,6 +1,8 @@
 package ru.alekssey7227.lifetime.activities;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -21,8 +23,5 @@ public class StatsActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-        tabs.getTabAt(1).select();
-        tabs.getTabAt(2).select(); // TODO: find out why I need 2 lines to select second tab
     }
 }
