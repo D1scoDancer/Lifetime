@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,7 +22,9 @@ import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.GoalActivity;
 import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
+import ru.alekssey7227.lifetime.backend.StatsUnit;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
+import ru.alekssey7227.lifetime.database.StatsDBHelper;
 
 
 public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHolder> {
@@ -71,6 +74,13 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
             notifyDataSetChanged();
 
             mainActivity.rvUpdate();
+
+            StatsDBHelper statsDBHelper = new StatsDBHelper(mainActivity);
+            StatsUnit statsUnit = statsDBHelper.getOrCreate(goal.getId(), goal.getIteration().getTimeInMinutes());
+            if(statsUnit != null){
+                Toast.makeText(mainActivity, "statsUnit", Toast.LENGTH_SHORT).show();
+            }
+
             return true;
         });
     }

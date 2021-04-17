@@ -2,12 +2,14 @@ package ru.alekssey7227.lifetime.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.backend.StatsUnit;
 
 public class StatsDBHelper extends SQLiteOpenHelper {
@@ -54,5 +56,27 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         int delCount = db.delete(TABLE_STATS, KEY_ID + "=" + unit.getId(), null);
 
         Log.d("mLog", "deleted rows count = " + delCount);
+    }
+
+    public StatsUnit getOrCreate(int goal_id, long day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(TABLE_STATS, new String[]{KEY_ID, KEY_GOAL_ID, KEY_ESTIMATED_TIME, KEY_ESTIMATED_TIME},
+                KEY_GOAL_ID + "=? and " + KEY_DAY + "=?",
+                new String[]{Integer.toString(goal_id), Long.toString(day)}, null,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(KEY_ID);
+            int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
+            int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int estimatedTimeIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
+
+            return new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
+                    cursor.getLong(dayIndex), cursor.getInt(estimatedTimeIndex));
+
+        } else {
+            return new StatsUnit(-1, goal_id, day, 0);
+        }
     }
 }
