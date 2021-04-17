@@ -21,7 +21,7 @@ import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.GoalActivity;
 import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
-import ru.alekssey7227.lifetime.database.DBHelper;
+import ru.alekssey7227.lifetime.database.GoalDBHelper;
 
 
 public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHolder> {
@@ -65,7 +65,7 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
             Goal goal = goals.get(position);
             goal.increment();
 
-            DBHelper dbHelper = new DBHelper(mainActivity);
+            GoalDBHelper dbHelper = new GoalDBHelper(mainActivity);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.updateGoal(db, goal);
             notifyDataSetChanged();

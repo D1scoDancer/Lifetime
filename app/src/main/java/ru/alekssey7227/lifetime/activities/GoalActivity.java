@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +22,13 @@ import java.util.Locale;
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
-import ru.alekssey7227.lifetime.database.DBHelper;
+import ru.alekssey7227.lifetime.database.GoalDBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
 
 public class GoalActivity extends AppCompatActivity {
 
     private Toolbar gToolBar;
-    private DBHelper dbHelper;
+    private GoalDBHelper dbHelper;
     private Goal goal;
 
     private TextView txtGAName;
@@ -84,7 +82,7 @@ public class GoalActivity extends AppCompatActivity {
         btnStop.setOnClickListener(this::onStopButton);
 
         int id = getIntent().getIntExtra(GoalsRVAdapter.MAIN_ACTIVITY_EXTRA, 0);
-        dbHelper = new DBHelper(this);
+        dbHelper = new GoalDBHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         goal = dbHelper.getById(database, id);
     }
@@ -177,7 +175,7 @@ public class GoalActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.app_bar_edit_goal) {
             GoalDialogFragment.display(getSupportFragmentManager(), goal);
         } else if (item.getItemId() == R.id.app_bar_delete_goal) {
-            DBHelper dbHelper = new DBHelper(this);
+            GoalDBHelper dbHelper = new GoalDBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.deleteGoal(db, goal);
             MainActivity.getInstance().rvUpdate();
@@ -236,7 +234,7 @@ public class GoalActivity extends AppCompatActivity {
         long m = (elapsedTime) / 60000;
         goal.getTime().setTimeInMinutes(goal.getTime().getTimeInMinutes() + m); // TODO: maybe метод внутри Time
 
-        DBHelper dbHelper = new DBHelper(this);
+        GoalDBHelper dbHelper = new GoalDBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.updateGoal(db, goal);
 

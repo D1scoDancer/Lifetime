@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import ru.alekssey7227.lifetime.backend.Goal;
 
-public class DBHelper extends SQLiteOpenHelper {
+public class GoalDBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "goalDB";
@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KEY_IMAGE = "image";
 
 
-    public DBHelper(@Nullable Context context) {
+    public GoalDBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

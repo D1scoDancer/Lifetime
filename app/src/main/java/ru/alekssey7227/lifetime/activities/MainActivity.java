@@ -25,14 +25,14 @@ import java.util.List;
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
-import ru.alekssey7227.lifetime.database.DBHelper;
+import ru.alekssey7227.lifetime.database.GoalDBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private RecyclerView goalsRV;
-    private DBHelper dbHelper;
+    private GoalDBHelper dbHelper;
 
     private static MainActivity instance;
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         goalsRV = findViewById(R.id.goalsRV);
 
-        dbHelper = new DBHelper(this);
+        dbHelper = new GoalDBHelper(this);
         rvUpdate();
 
         AccountHeader headerResult = new AccountHeaderBuilder()

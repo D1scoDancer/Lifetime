@@ -6,12 +6,10 @@ import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
-import ru.alekssey7227.lifetime.database.DBHelper;
+import ru.alekssey7227.lifetime.database.GoalDBHelper;
 
 public class GoalDialogFragment extends DialogFragment implements IconDialogFragment.CallBack {
 
@@ -99,10 +97,10 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
             // добавление новой цели в БД
             toolbar.setOnMenuItemClickListener(item -> {
                 if (validateInput()) {
-                    SQLiteOpenHelper dbHelper = new DBHelper(getContext());
+                    SQLiteOpenHelper dbHelper = new GoalDBHelper(getContext());
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
                     ContentValues contentValues = getInput();
-                    database.insert(DBHelper.TABLE_GOALS, null, contentValues);
+                    database.insert(GoalDBHelper.TABLE_GOALS, null, contentValues);
                     MainActivity.getInstance().rvUpdate();
                     dismiss();
                     return true;
@@ -115,7 +113,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
             // редактирование цели в БД
             toolbar.setOnMenuItemClickListener(item -> {
                 if (validateInput()) {
-                    DBHelper dbHelper = new DBHelper(getContext());
+                    GoalDBHelper dbHelper = new GoalDBHelper(getContext());
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
                     changeGoal();
                     dbHelper.updateGoal(db, _goal);
@@ -160,10 +158,10 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         String time = Double.toString(timeInHours * 60);
         double iterationInHours = Double.parseDouble(text_input_iteration.getEditText().getText().toString());
         String iteration = Double.toString(iterationInHours * 60);
-        contentValues.put(DBHelper.KEY_NAME, name);
-        contentValues.put(DBHelper.KEY_TIME, time);
-        contentValues.put(DBHelper.KEY_ITERATION, iteration);
-        contentValues.put(DBHelper.KEY_IMAGE, imagePosition);
+        contentValues.put(GoalDBHelper.KEY_NAME, name);
+        contentValues.put(GoalDBHelper.KEY_TIME, time);
+        contentValues.put(GoalDBHelper.KEY_ITERATION, iteration);
+        contentValues.put(GoalDBHelper.KEY_IMAGE, imagePosition);
 
         return contentValues;
     }
