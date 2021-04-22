@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.adapters;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +17,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ru.alekssey7227.lifetime.R;
@@ -68,21 +71,46 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
             Goal goal = goals.get(position);
             goal.increment();
 
-            GoalDBHelper dbHelper = new GoalDBHelper(mainActivity);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.updateGoal(db, goal);
-            notifyDataSetChanged();
+            handleGoalDB(goal);
 
             mainActivity.rvUpdate();
 
-            StatsDBHelper statsDBHelper = new StatsDBHelper(mainActivity);
-            StatsUnit statsUnit = statsDBHelper.getOrCreate(goal.getId(), goal.getIteration().getTimeInMinutes());
-            if(statsUnit != null){
-                Toast.makeText(mainActivity, "statsUnit", Toast.LENGTH_SHORT).show();
-            }
+            handleStatsDB(goal);
 
             return true;
         });
+    }
+
+    private void handleGoalDB(Goal goal) {
+        GoalDBHelper dbHelper = new GoalDBHelper(mainActivity);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.updateGoal(db, goal);
+        notifyDataSetChanged();
+    }
+
+    private void handleStatsDB(Goal goal) {
+        StatsDBHelper statsDBHelper = new StatsDBHelper(mainActivity);
+
+        long year = Calendar.getInstance().get(Calendar.YEAR);
+        long day = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+
+        year -= 2021;
+        long date = year * 366 + day;
+
+        StatsUnit unit = statsDBHelper.get(goal.getId(), date);
+        SQLiteDatabase db = statsDBHelper.getWritableDatabase();
+
+        if(unit != null){
+            unit.setEstimatedTime(unit.getEstimatedTime() + goal.getIteration().getTimeInMinutes());
+            statsDBHelper.updateStatsUnit(db, unit);
+        } else {
+            ContentValues cv = new ContentValues();
+            cv.put(StatsDBHelper.KEY_GOAL_ID, goal.getId());
+            cv.put(StatsDBHelper.KEY_DAY, date);
+            cv.put(StatsDBHelper.KEY_ESTIMATED_TIME, goal.getIteration().getTimeInMinutes());
+            db.insert(StatsDBHelper.TABLE_STATS, null, cv);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
