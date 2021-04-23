@@ -3,6 +3,7 @@ package ru.alekssey7227.lifetime.activities;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -85,6 +93,8 @@ public class GoalActivity extends AppCompatActivity {
         dbHelper = new GoalDBHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         goal = dbHelper.getById(database, id);
+
+        createBarChart();
     }
 
     @Override
@@ -243,5 +253,30 @@ public class GoalActivity extends AppCompatActivity {
         btnStart.setEnabled(true);
         btnPause.setEnabled(false);
         btnStop.setEnabled(false);
+    }
+
+    private void createBarChart() {
+        BarChart barChart = findViewById(R.id.gaBarChart);
+
+        ArrayList<BarEntry> visitors = new ArrayList<>();
+        visitors.add(new BarEntry(2014, 420));
+        visitors.add(new BarEntry(2015, 475));
+        visitors.add(new BarEntry(2016, 508));
+        visitors.add(new BarEntry(2017, 520));
+        visitors.add(new BarEntry(2018, 400));
+        visitors.add(new BarEntry(2019, 370));
+        visitors.add(new BarEntry(2020, 100));
+
+        BarDataSet barDataSet = new BarDataSet(visitors, "Visitors");
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(16f);
+
+        BarData barData = new BarData(barDataSet);
+
+        barChart.setFitBars(true);
+        barChart.setData(barData);
+        barChart.getDescription().setText("Bar Chart Example");
+        barChart.animateY(2000);
     }
 }
