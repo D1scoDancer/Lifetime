@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +26,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
+import ru.alekssey7227.lifetime.backend.StatsUnit;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
+import ru.alekssey7227.lifetime.database.StatsDBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
 
 public class GoalActivity extends AppCompatActivity {
@@ -258,25 +262,23 @@ public class GoalActivity extends AppCompatActivity {
     private void createBarChart() {
         BarChart barChart = findViewById(R.id.gaBarChart);
 
-        ArrayList<BarEntry> visitors = new ArrayList<>();
-        visitors.add(new BarEntry(2014, 420));
-        visitors.add(new BarEntry(2015, 475));
-        visitors.add(new BarEntry(2016, 508));
-        visitors.add(new BarEntry(2017, 520));
-        visitors.add(new BarEntry(2018, 400));
-        visitors.add(new BarEntry(2019, 370));
-        visitors.add(new BarEntry(2020, 100));
+        StatsDBHelper statsDBHelper = new StatsDBHelper(this);
+        List<StatsUnit> units = statsDBHelper.get(goal.getId());
+        ArrayList<BarEntry> hoursPerDay = new ArrayList<>();
 
-        BarDataSet barDataSet = new BarDataSet(visitors, "Visitors");
+        for (StatsUnit unit : units) {
+            hoursPerDay.add(new BarEntry(unit.getDay(), Math.round(unit.getEstimatedTime() / 60.0)));
+        }
+
+        BarDataSet barDataSet = new BarDataSet(hoursPerDay, goal.getName());
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
+        barDataSet.setValueTextSize(12f);
 
         BarData barData = new BarData(barDataSet);
 
         barChart.setFitBars(true);
         barChart.setData(barData);
-        barChart.getDescription().setText("Bar Chart Example");
-        barChart.animateY(2000);
+        barChart.getDescription().setEnabled(false);
     }
 }

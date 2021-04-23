@@ -6,12 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import ru.alekssey7227.lifetime.activities.MainActivity;
-import ru.alekssey7227.lifetime.backend.Goal;
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.alekssey7227.lifetime.backend.StatsUnit;
 
 public class StatsDBHelper extends SQLiteOpenHelper {
@@ -79,5 +79,29 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return unit;
+    }
+
+    public List<StatsUnit> get(int goal_id) {
+        List<StatsUnit> units = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = KEY_GOAL_ID + " =?";
+        String[] selectionArgs = new String[]{Integer.toString(goal_id)};
+        Cursor cursor = db.query(TABLE_STATS, null, selection, selectionArgs, null,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(KEY_ID);
+            int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
+            int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int estimatedTimeIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
+
+            do {
+                units.add(new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
+                        cursor.getLong(dayIndex), cursor.getLong(estimatedTimeIndex)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return units;
     }
 }
