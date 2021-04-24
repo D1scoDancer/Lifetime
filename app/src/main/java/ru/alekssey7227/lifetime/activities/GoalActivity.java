@@ -19,9 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -280,5 +283,21 @@ public class GoalActivity extends AppCompatActivity {
         barChart.setFitBars(true);
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
+
+        XAxis xAxis = barChart.getXAxis();
+
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {  // TODO: для американцев месяц должен быть впереди
+                int thatDay = (int) value;
+                int month = thatDay / 30;
+                int day = thatDay % 30;
+
+                return day + "." + month;
+            }
+        });
     }
 }
