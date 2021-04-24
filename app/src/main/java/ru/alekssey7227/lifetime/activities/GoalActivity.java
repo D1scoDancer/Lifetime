@@ -267,7 +267,7 @@ public class GoalActivity extends AppCompatActivity {
         ArrayList<BarEntry> hoursPerDay = new ArrayList<>();
 
         for (StatsUnit unit : units) {
-            hoursPerDay.add(new BarEntry(unit.getDay(), Math.round(unit.getEstimatedTime() / 60.0)));
+            hoursPerDay.add(new BarEntry(unit.getDay(), (float) unit.getEstimatedTime().getTimeInHours()));
         }
 
         BarDataSet barDataSet = new BarDataSet(hoursPerDay, goal.getName());

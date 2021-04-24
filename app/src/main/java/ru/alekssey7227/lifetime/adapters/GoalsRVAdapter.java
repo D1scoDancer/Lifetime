@@ -101,7 +101,7 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
         SQLiteDatabase db = statsDBHelper.getWritableDatabase();
 
         if(unit != null){
-            unit.setEstimatedTime(unit.getEstimatedTime() + goal.getIteration().getTimeInMinutes());
+            unit.addTime(goal.getIteration().getTimeInMinutes());
             statsDBHelper.updateStatsUnit(db, unit);
         } else {
             ContentValues cv = new ContentValues();

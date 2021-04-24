@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.alekssey7227.lifetime.backend.StatsUnit;
+import ru.alekssey7227.lifetime.backend.Time;
 
 public class StatsDBHelper extends SQLiteOpenHelper {
 
@@ -47,7 +48,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_GOAL_ID, unit.getGoalId());
         contentValues.put(KEY_DAY, unit.getDay());
-        contentValues.put(KEY_ESTIMATED_TIME, unit.getEstimatedTime());
+        contentValues.put(KEY_ESTIMATED_TIME, unit.getEstimatedTime().getTimeInMinutes());
 
         int updCount = db.update(TABLE_STATS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(unit.getId())});
 
@@ -75,7 +76,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
             int dayIndex = cursor.getColumnIndex(KEY_DAY);
             int estimatedTimeIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
             unit = new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
-                    cursor.getLong(dayIndex), cursor.getLong(estimatedTimeIndex));
+                    cursor.getLong(dayIndex), new Time(cursor.getLong(estimatedTimeIndex)));
         }
         cursor.close();
         return unit;
@@ -98,7 +99,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
 
             do {
                 units.add(new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
-                        cursor.getLong(dayIndex), cursor.getLong(estimatedTimeIndex)));
+                        cursor.getLong(dayIndex), new Time(cursor.getLong(estimatedTimeIndex))));
             } while (cursor.moveToNext());
         }
         cursor.close();

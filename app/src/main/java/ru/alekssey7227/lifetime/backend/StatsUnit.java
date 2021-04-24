@@ -7,9 +7,9 @@ public class StatsUnit {
 
     private long day;
 
-    private long estimatedTime;
+    private Time estimatedTime;
 
-    public StatsUnit(int id, int goalId, long day, long estimatedTime) {
+    public StatsUnit(int id, int goalId, long day, Time estimatedTime) {
         this.id = id;
         this.goalId = goalId;
         this.day = day;
@@ -40,11 +40,15 @@ public class StatsUnit {
         this.day = day;
     }
 
-    public long getEstimatedTime() {
+    public Time getEstimatedTime() {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(long estimatedTime) {
+    public void setEstimatedTime(Time estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public void addTime(long et){
+        estimatedTime.setTimeInMinutes(estimatedTime.getTimeInMinutes() + et);
     }
 }
