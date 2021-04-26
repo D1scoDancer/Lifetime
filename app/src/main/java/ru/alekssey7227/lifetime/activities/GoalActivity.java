@@ -21,9 +21,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -278,6 +280,15 @@ public class GoalActivity extends AppCompatActivity {
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(12f);
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == (int) value)
+                    return String.format(Locale.ENGLISH, "%d", (int) value);
+                else
+                    return String.format(Locale.ENGLISH, "%s", value);
+            }
+        });
 
         BarData barData = new BarData(barDataSet);
 
@@ -300,6 +311,5 @@ public class GoalActivity extends AppCompatActivity {
                 return day + "." + month;
             }
         });
-
     }
 }
