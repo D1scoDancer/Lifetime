@@ -91,13 +91,12 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
     private void handleStatsDB(Goal goal) {
         StatsDBHelper statsDBHelper = new StatsDBHelper(mainActivity);
 
-        long year = Calendar.getInstance().get(Calendar.YEAR);
-        long day = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
 
-        year -= 2021;
-        long date = year * 366 + day;
 
-        StatsUnit unit = statsDBHelper.get(goal.getId(), date);
+        StatsUnit unit = statsDBHelper.get(goal.getId(), day, month, year);
         SQLiteDatabase db = statsDBHelper.getWritableDatabase();
 
         if(unit != null){
@@ -106,7 +105,9 @@ public class GoalsRVAdapter extends RecyclerView.Adapter<GoalsRVAdapter.ViewHold
         } else {
             ContentValues cv = new ContentValues();
             cv.put(StatsDBHelper.KEY_GOAL_ID, goal.getId());
-            cv.put(StatsDBHelper.KEY_DAY, date);
+            cv.put(StatsDBHelper.KEY_DAY, day);
+            cv.put(StatsDBHelper.KEY_MONTH, month);
+            cv.put(StatsDBHelper.KEY_YEAR, year);
             cv.put(StatsDBHelper.KEY_ESTIMATED_TIME, goal.getIteration().getTimeInMinutes());
             db.insert(StatsDBHelper.TABLE_STATS, null, cv);
         }

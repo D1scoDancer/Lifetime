@@ -24,6 +24,8 @@ public class StatsDBHelper extends SQLiteOpenHelper {
     public static final String KEY_ID = "_id";
     public static final String KEY_GOAL_ID = "goal_id";
     public static final String KEY_DAY = "day";
+    public static final String KEY_MONTH = "month";
+    public static final String KEY_YEAR = "year";
     public static final String KEY_ESTIMATED_TIME = "estimated_time";
 
     public StatsDBHelper(@Nullable Context context) {
@@ -33,7 +35,8 @@ public class StatsDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_STATS + "(" + KEY_ID
-                + " integer primary key, " + KEY_GOAL_ID + " integer, " + KEY_DAY + " bigint, "
+                + " integer primary key, " + KEY_GOAL_ID + " integer, "
+                + KEY_DAY + " integer, " + KEY_MONTH + " integer, " + KEY_YEAR + " integer, "
                 + KEY_ESTIMATED_TIME + " bigint" + ")");
     }
 
@@ -48,6 +51,8 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_GOAL_ID, unit.getGoalId());
         contentValues.put(KEY_DAY, unit.getDay());
+        contentValues.put(KEY_MONTH, unit.getMonth());
+        contentValues.put(KEY_YEAR, unit.getYear());
         contentValues.put(KEY_ESTIMATED_TIME, unit.getEstimatedTime().getTimeInMinutes());
 
         int updCount = db.update(TABLE_STATS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(unit.getId())});
@@ -61,12 +66,13 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         Log.d("mLog", "deleted rows count = " + delCount);
     }
 
-    public StatsUnit get(int goal_id, long day) {
+    public StatsUnit get(int goal_id, int day, int month, int year) {
         StatsUnit unit = null;
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String selection = KEY_GOAL_ID + " =?" + " AND " + KEY_DAY + "=?";
-        String[] selectionArgs = new String[]{Integer.toString(goal_id), Long.toString(day)};
+        String selection = KEY_GOAL_ID + " =?" + " AND " + KEY_DAY + "=?" + " AND " + KEY_MONTH + "=?" + " AND " + KEY_YEAR + "=?";
+        String[] selectionArgs = new String[]{Integer.toString(goal_id), Integer.toString(day),
+                Integer.toString(month), Integer.toString(year)};
         Cursor cursor = db.query(TABLE_STATS, null, selection, selectionArgs, null,
                 null, null, null);
 
@@ -74,9 +80,12 @@ public class StatsDBHelper extends SQLiteOpenHelper {
             int idIndex = cursor.getColumnIndex(KEY_ID);
             int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
             int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int monthIndex = cursor.getColumnIndex(KEY_MONTH);
+            int yearIndex = cursor.getColumnIndex(KEY_YEAR);
             int estimatedTimeIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
             unit = new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
-                    cursor.getLong(dayIndex), new Time(cursor.getLong(estimatedTimeIndex)));
+                    cursor.getInt(dayIndex), cursor.getInt(monthIndex), cursor.getInt(yearIndex),
+                    new Time(cursor.getLong(estimatedTimeIndex)));
         }
         cursor.close();
         return unit;
@@ -95,11 +104,14 @@ public class StatsDBHelper extends SQLiteOpenHelper {
             int idIndex = cursor.getColumnIndex(KEY_ID);
             int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
             int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int monthIndex = cursor.getColumnIndex(KEY_MONTH);
+            int yearIndex = cursor.getColumnIndex(KEY_YEAR);
             int estimatedTimeIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
 
             do {
                 units.add(new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
-                        cursor.getLong(dayIndex), new Time(cursor.getLong(estimatedTimeIndex))));
+                        cursor.getInt(dayIndex), cursor.getInt(monthIndex), cursor.getInt(yearIndex),
+                        new Time(cursor.getLong(estimatedTimeIndex))));
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -269,8 +270,8 @@ public class GoalActivity extends AppCompatActivity {
         List<StatsUnit> units = statsDBHelper.get(goal.getId());
         ArrayList<BarEntry> hoursPerDay = new ArrayList<>();
 
-        for (StatsUnit unit : units) {
-            hoursPerDay.add(new BarEntry(unit.getDay(), (float) unit.getEstimatedTime().getTimeInHours()));
+        for (int i = 0; i < units.size(); i++) {
+            hoursPerDay.add(new BarEntry(i, (float) units.get(i).getEstimatedTime().getTimeInHours()));
         }
 
         BarDataSet barDataSet = new BarDataSet(hoursPerDay, goal.getName());
@@ -291,13 +292,14 @@ public class GoalActivity extends AppCompatActivity {
 
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
-            public String getFormattedValue(float value) {  // TODO: для американцев месяц должен быть впереди
-                int thatDay = (int) value;
-                int month = thatDay / 30;
-                int day = thatDay % 30;
-
+            public String getFormattedValue(float value) {
+                int i = (int) value;
+                StatsUnit unit = units.get(i);
+                String day = String.format(Locale.ENGLISH, "%02d", unit.getDay());
+                String month = String.format(Locale.ENGLISH, "%02d", unit.getMonth());
                 return day + "." + month;
             }
         });
+
     }
 }
