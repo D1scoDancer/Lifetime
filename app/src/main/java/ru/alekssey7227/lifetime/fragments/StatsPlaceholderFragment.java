@@ -1,12 +1,10 @@
-package ru.alekssey7227.lifetime.activities.ui.main;
+package ru.alekssey7227.lifetime.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,23 +25,23 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.mikepenz.materialize.color.Material;
 
 import java.util.ArrayList;
 
 import ru.alekssey7227.lifetime.R;
+import ru.alekssey7227.lifetime.others.StatsPageViewModel;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class StatsPlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private PageViewModel pageViewModel;
+    private StatsPageViewModel statsPageViewModel;
 
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static StatsPlaceholderFragment newInstance(int index) {
+        StatsPlaceholderFragment fragment = new StatsPlaceholderFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -53,12 +51,12 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
+        statsPageViewModel = new ViewModelProvider(this).get(StatsPageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
-        pageViewModel.setIndex(index);
+        statsPageViewModel.setIndex(index);
     }
 
     @Override
