@@ -311,5 +311,8 @@ public class GoalActivity extends AppCompatActivity {
                 return day + "." + month;
             }
         });
+
+        barChart.getAxisLeft().setAxisMinimum(0f);
+        barChart.getAxisRight().setAxisMinimum(0f);
     }
 }
