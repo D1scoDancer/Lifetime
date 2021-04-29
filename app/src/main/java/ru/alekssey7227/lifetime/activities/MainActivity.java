@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH),
-                18,
+                0,
                 0,
                 0);
 
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-        alarmManager.setRepeating(AlarmManager.RTC, ms, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC, ms, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }
