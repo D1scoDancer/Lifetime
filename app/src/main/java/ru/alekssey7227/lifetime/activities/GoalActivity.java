@@ -194,7 +194,8 @@ public class GoalActivity extends AppCompatActivity {
         // Редактирование цели
         if (item.getItemId() == R.id.app_bar_edit_goal) {
             GoalDialogFragment.display(getSupportFragmentManager(), goal);
-        } else if (item.getItemId() == R.id.app_bar_delete_goal) {
+        }  // Удаление цели
+        else if (item.getItemId() == R.id.app_bar_delete_goal) {
             GoalDBHelper dbHelper = new GoalDBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.deleteGoal(db, goal);
@@ -205,6 +206,10 @@ public class GoalActivity extends AppCompatActivity {
             isRunning = false;
             isPaused = false;
             chronometer.stop();
+
+            StatsDBHelper statsDBHelper = new StatsDBHelper(this);
+            SQLiteDatabase db2 = statsDBHelper.getWritableDatabase();
+            statsDBHelper.deleteStatsUnits(db2, goal.getId());
 
             finish();
         } else {

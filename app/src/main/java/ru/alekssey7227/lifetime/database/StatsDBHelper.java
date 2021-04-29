@@ -60,8 +60,8 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         Log.d("mLog", "updates row count = " + updCount);
     }
 
-    public void deleteStatsUnit(SQLiteDatabase db, StatsUnit unit) {
-        int delCount = db.delete(TABLE_STATS, KEY_ID + "=" + unit.getId(), null);
+    public void deleteStatsUnits(SQLiteDatabase db, int goal_id) {
+        int delCount = db.delete(TABLE_STATS, KEY_ID + "=" + goal_id, null);
 
         Log.d("mLog", "deleted rows count = " + delCount);
     }
