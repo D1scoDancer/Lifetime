@@ -1,7 +1,9 @@
 package ru.alekssey7227.lifetime.fragments;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +26,19 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import ru.alekssey7227.lifetime.R;
+import ru.alekssey7227.lifetime.backend.Goal;
+import ru.alekssey7227.lifetime.backend.StatsUnit;
+import ru.alekssey7227.lifetime.database.GoalDBHelper;
+import ru.alekssey7227.lifetime.database.StatsDBHelper;
 import ru.alekssey7227.lifetime.others.StatsPageViewModel;
 
 /**
@@ -110,27 +120,71 @@ public class StatsPlaceholderFragment extends Fragment {
     private void createBarChart(View root) {
         BarChart barChart = root.findViewById(R.id.barChart);
 
-        ArrayList<BarEntry> visitors = new ArrayList<>();
-        visitors.add(new BarEntry(2014, 420));
-        visitors.add(new BarEntry(2015, 475));
-        visitors.add(new BarEntry(2016, 508));
-        visitors.add(new BarEntry(2017, 520));
-        visitors.add(new BarEntry(2018, 400));
-        visitors.add(new BarEntry(2019, 370));
-        visitors.add(new BarEntry(2020, 100));
+        GoalDBHelper goalDBHelper = new GoalDBHelper(root.getContext());
+        SQLiteDatabase db = goalDBHelper.getReadableDatabase();
 
-        BarDataSet barDataSet = new BarDataSet(visitors, "Visitors");
+        StatsDBHelper statsDBHelper = new StatsDBHelper(root.getContext());
+        SQLiteDatabase db2 = statsDBHelper.getReadableDatabase();
+
+        ArrayList<BarEntry> hoursPerDay = new ArrayList<>();
+
+        List<Calendar> calendars = statsDBHelper.getAllDates(db2);
+
+        ArrayList<Float> timeList = new ArrayList<>();
+
+        for (Calendar calendar : calendars) {
+            List<StatsUnit> dayUnits = statsDBHelper.getByDate(db2, calendar);
+            long time = 0;
+            for (StatsUnit unit : dayUnits) {
+                time += unit.getEstimatedTime().getTimeInMinutes();
+            }
+            timeList.add((float) (time / 60.0));
+        }
+
+        for (int i = 0; i < calendars.size(); i++) {
+            hoursPerDay.add(new BarEntry(i, timeList.get(i)));
+        }
+
+        BarDataSet barDataSet = new BarDataSet(hoursPerDay, "Total");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
+        barDataSet.setValueTextSize(12f);
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == (int) value)
+                    return String.format(Locale.ENGLISH, "%d", (int) value);
+                else
+                    return String.format(Locale.ENGLISH, "%s", value);
+            }
+        });
 
         BarData barData = new BarData(barDataSet);
 
         barChart.setFitBars(true);
         barChart.setData(barData);
-        barChart.getDescription().setText("Bar Chart Example");
-        barChart.animateY(2000);
+        barChart.getDescription().setEnabled(false);
+
+        XAxis xAxis = barChart.getXAxis();
+
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int i = (int) value;
+                Calendar calendar = calendars.get(i);
+                String day = String.format(Locale.ENGLISH, "%02d", calendar.get(Calendar.DAY_OF_MONTH));
+                String month = String.format(Locale.ENGLISH, "%02d", calendar.get(Calendar.MONTH) + 1);
+                return day + "." + month;
+            }
+        });
+
+        barChart.getAxisLeft().setAxisMinimum(0f);
+        barChart.getAxisRight().setAxisMinimum(0f);
     }
+
 
     private void createRadarChart(View root) {
         RadarChart radarChart = root.findViewById(R.id.radarChart);

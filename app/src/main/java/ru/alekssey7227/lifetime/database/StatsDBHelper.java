@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ru.alekssey7227.lifetime.backend.StatsUnit;
@@ -116,5 +117,93 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return units;
+    }
+
+    public List<StatsUnit> readAllUnits(SQLiteDatabase db) {
+        List<StatsUnit> units = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_STATS, null, null, null,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(KEY_ID);
+            int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
+            int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int monthIndex = cursor.getColumnIndex(KEY_MONTH);
+            int yearIndex = cursor.getColumnIndex(KEY_YEAR);
+            int etIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
+
+            do {
+                StatsUnit unit = new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
+                        cursor.getInt(dayIndex), cursor.getInt(monthIndex), cursor.getInt(yearIndex),
+                        new Time(cursor.getLong(etIndex)));
+
+                units.add(unit);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return units;
+    }
+
+    public List<Calendar> getAllDates(SQLiteDatabase db) {
+        List<Calendar> calendars = new ArrayList<>();
+
+        String[] columns = new String[]{KEY_DAY, KEY_MONTH, KEY_YEAR};
+
+        Cursor cursor = db.query(true, TABLE_STATS, columns, null,
+                null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int monthIndex = cursor.getColumnIndex(KEY_MONTH);
+            int yearIndex = cursor.getColumnIndex(KEY_YEAR);
+
+            do {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(
+                        cursor.getInt(yearIndex),
+                        cursor.getInt(monthIndex) - 1,
+                        cursor.getInt(dayIndex),
+                        0, 0, 0);
+
+                calendars.add(calendar);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return calendars;
+    }
+
+    public List<StatsUnit> getByDate(SQLiteDatabase db, Calendar calendar) {
+        List<StatsUnit> dayUnits = new ArrayList<>();
+
+        String selection = KEY_DAY + " =?" + " AND " + KEY_MONTH + " =?" + " AND " + KEY_YEAR + " =?";
+        String[] selectionArgs = new String[]{Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)),
+                Integer.toString(calendar.get(Calendar.MONTH) + 1),
+                Integer.toString(calendar.get(Calendar.YEAR))};
+
+        Cursor cursor = db.query(true, TABLE_STATS, null, selection,
+                selectionArgs, null, null, null, null);
+        
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(KEY_ID);
+            int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);
+            int dayIndex = cursor.getColumnIndex(KEY_DAY);
+            int monthIndex = cursor.getColumnIndex(KEY_MONTH);
+            int yearIndex = cursor.getColumnIndex(KEY_YEAR);
+            int etIndex = cursor.getColumnIndex(KEY_ESTIMATED_TIME);
+
+            do {
+                StatsUnit unit = new StatsUnit(cursor.getInt(idIndex), cursor.getInt(goalIdIndex),
+                        cursor.getInt(dayIndex), cursor.getInt(monthIndex), cursor.getInt(yearIndex),
+                        new Time(cursor.getLong(etIndex)));
+
+                dayUnits.add(unit);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return dayUnits;
     }
 }
