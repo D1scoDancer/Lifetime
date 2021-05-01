@@ -107,7 +107,7 @@ public class StatsPlaceholderFragment extends Fragment {
             }
         }
 
-        PieDataSet pieDataSet = new PieDataSet(totalTime, "Total");
+        PieDataSet pieDataSet = new PieDataSet(totalTime, "");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
@@ -116,7 +116,8 @@ public class StatsPlaceholderFragment extends Fragment {
 
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Total");
+        pieChart.setCenterText("Total"); //TODO: оставляю для информативности
+        pieChart.setCenterTextSize(18f);
         pieChart.animate();
     }
 
@@ -145,7 +146,7 @@ public class StatsPlaceholderFragment extends Fragment {
             hoursPerDay.add(new BarEntry(i, timeList.get(i)));
         }
 
-        BarDataSet barDataSet = new BarDataSet(hoursPerDay, "Total");
+        BarDataSet barDataSet = new BarDataSet(hoursPerDay, "Total"); //TODO: оставляю для информативности
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(12f);
@@ -215,7 +216,7 @@ public class StatsPlaceholderFragment extends Fragment {
 //            }
         }
 
-        RadarDataSet radarDataSet = new RadarDataSet(activity, "Activity");
+        RadarDataSet radarDataSet = new RadarDataSet(activity, "Activity"); //TODO: оставляю для информативности
         radarDataSet.setColor(Color.RED);
         radarDataSet.setLineWidth(2f);
         radarDataSet.setValueTextColor(Color.RED);
@@ -231,8 +232,9 @@ public class StatsPlaceholderFragment extends Fragment {
 
         XAxis xAxis = radarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setTextSize(9f);
 
-        radarChart.getDescription().setText("RadarChart example");
+        radarChart.getDescription().setEnabled(false);
         radarChart.setData(radarData);
     }
 }

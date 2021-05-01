@@ -19,10 +19,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Calendar;
+import java.util.List;
+
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.activities.MainActivity;
 import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
+import ru.alekssey7227.lifetime.database.StatsDBHelper;
 
 public class GoalDialogFragment extends DialogFragment implements IconDialogFragment.CallBack {
 
@@ -97,10 +101,25 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
             // добавление новой цели в БД
             toolbar.setOnMenuItemClickListener(item -> {
                 if (validateInput()) {
-                    SQLiteOpenHelper dbHelper = new GoalDBHelper(getContext());
-                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    GoalDBHelper dbHelper = new GoalDBHelper(getContext());
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
                     ContentValues contentValues = getInput();
-                    database.insert(GoalDBHelper.TABLE_GOALS, null, contentValues);
+                    db.insert(GoalDBHelper.TABLE_GOALS, null, contentValues);
+
+                    db = dbHelper.getReadableDatabase();
+                    List<Goal> goals = dbHelper.readAllGoals(db);
+
+                    StatsDBHelper statsDBHelper = new StatsDBHelper(getContext());
+                    SQLiteDatabase db2 = statsDBHelper.getWritableDatabase();
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(StatsDBHelper.KEY_GOAL_ID, goals.get(goals.size()-1).getId());
+                    cv.put(StatsDBHelper.KEY_DAY, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    cv.put(StatsDBHelper.KEY_MONTH, Calendar.getInstance().get(Calendar.MONTH) + 1);
+                    cv.put(StatsDBHelper.KEY_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+                    cv.put(StatsDBHelper.KEY_ESTIMATED_TIME, 0);
+                    db2.insert(StatsDBHelper.TABLE_STATS, null, cv);
+
                     MainActivity.getInstance().rvUpdate();
                     dismiss();
                     return true;
