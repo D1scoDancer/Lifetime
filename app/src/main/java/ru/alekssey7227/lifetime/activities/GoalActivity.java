@@ -1,10 +1,12 @@
 package ru.alekssey7227.lifetime.activities;
 
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -263,11 +265,38 @@ public class GoalActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.updateGoal(db, goal);
 
-        txtGATime.setText(goal.getTime().getTimeInHoursStringFormatted());
+        handleStatsDB(goal, m);
+        createBarChart();
+
 
         btnStart.setEnabled(true);
         btnPause.setEnabled(false);
         btnStop.setEnabled(false);
+    }
+
+    private void handleStatsDB(Goal goal, long m) {
+        StatsDBHelper statsDBHelper = new StatsDBHelper(this);
+
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+
+
+        StatsUnit unit = statsDBHelper.get(goal.getId(), day, month, year);
+        SQLiteDatabase db = statsDBHelper.getWritableDatabase();
+        Log.d("mLog", "here");
+        if (unit != null) {
+            unit.addTime(m);
+            statsDBHelper.updateStatsUnit(db, unit);
+        } else {
+            ContentValues cv = new ContentValues();
+            cv.put(StatsDBHelper.KEY_GOAL_ID, goal.getId());
+            cv.put(StatsDBHelper.KEY_DAY, day);
+            cv.put(StatsDBHelper.KEY_MONTH, month);
+            cv.put(StatsDBHelper.KEY_YEAR, year);
+            cv.put(StatsDBHelper.KEY_ESTIMATED_TIME, m);
+            db.insert(StatsDBHelper.TABLE_STATS, null, cv);
+        }
     }
 
     private void createBarChart() {
@@ -319,5 +348,7 @@ public class GoalActivity extends AppCompatActivity {
 
         barChart.getAxisLeft().setAxisMinimum(0f);
         barChart.getAxisRight().setAxisMinimum(0f);
+
+        barChart.invalidate();
     }
 }
