@@ -119,6 +119,9 @@ public class StatsPlaceholderFragment extends Fragment {
         pieChart.setCenterText("Total"); //TODO: оставляю для информативности
         pieChart.setCenterTextSize(18f);
         pieChart.animate();
+
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
     }
 
     private void createBarChart(View root) {
@@ -184,6 +187,9 @@ public class StatsPlaceholderFragment extends Fragment {
 
         barChart.getAxisLeft().setAxisMinimum(0f);
         barChart.getAxisRight().setAxisMinimum(0f);
+
+        barChart.notifyDataSetChanged();
+        barChart.invalidate();
     }
 
 
@@ -236,5 +242,8 @@ public class StatsPlaceholderFragment extends Fragment {
 
         radarChart.getDescription().setEnabled(false);
         radarChart.setData(radarData);
+
+        radarChart.notifyDataSetChanged();
+        radarChart.invalidate();
     }
 }
