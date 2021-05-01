@@ -175,7 +175,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
         return calendars;
     }
 
-    public List<StatsUnit> getByDate(SQLiteDatabase db, Calendar calendar) {
+    public List<StatsUnit> getByDate(SQLiteDatabase db, Calendar calendar) { // TODO: change to get()
         List<StatsUnit> dayUnits = new ArrayList<>();
 
         String selection = KEY_DAY + " =?" + " AND " + KEY_MONTH + " =?" + " AND " + KEY_YEAR + " =?";

@@ -99,18 +99,18 @@ public class StatsPlaceholderFragment extends Fragment {
         SQLiteDatabase db = goalDBHelper.getReadableDatabase();
         List<Goal> goals = goalDBHelper.readAllGoals(db);
 
-        ArrayList<PieEntry> visitors = new ArrayList<>();
+        ArrayList<PieEntry> totalTime = new ArrayList<>();
 
         for (Goal goal : goals) {
-            if(goal.getTime().getTimeInHours() != 0){
-                visitors.add(new PieEntry((float) goal.getTime().getTimeInHours(), goal.getName()));
+            if (goal.getTime().getTimeInHours() != 0) {
+                totalTime.add(new PieEntry((float) goal.getTime().getTimeInHours(), goal.getName()));
             }
         }
 
-        PieDataSet pieDataSet = new PieDataSet(visitors, "Total");
+        PieDataSet pieDataSet = new PieDataSet(totalTime, "Total");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f); 
+        pieDataSet.setValueTextSize(16f);
 
         PieData pieData = new PieData(pieDataSet);
 
@@ -189,25 +189,46 @@ public class StatsPlaceholderFragment extends Fragment {
     private void createRadarChart(View root) {
         RadarChart radarChart = root.findViewById(R.id.radarChart);
 
-        ArrayList<RadarEntry> visitors = new ArrayList<>();
-        visitors.add(new RadarEntry(420));
-        visitors.add(new RadarEntry(475));
-        visitors.add(new RadarEntry(508));
-        visitors.add(new RadarEntry(520));
-        visitors.add(new RadarEntry(400));
-        visitors.add(new RadarEntry(370));
-        visitors.add(new RadarEntry(100));
+        GoalDBHelper goalDBHelper = new GoalDBHelper(root.getContext());
+        SQLiteDatabase db = goalDBHelper.getReadableDatabase();
 
-        RadarDataSet radarDataSet = new RadarDataSet(visitors, "Visitors");
+        StatsDBHelper statsDBHelper = new StatsDBHelper(root.getContext());
+
+        List<Goal> goals = goalDBHelper.readAllGoals(db);
+        int n = goals.size();
+
+        ArrayList<Float> timeList = new ArrayList<>();
+
+        for (Goal goal : goals) {
+            List<StatsUnit> goalUnits = statsDBHelper.get(goal.getId());
+            long time = 0;
+            for (StatsUnit unit : goalUnits) {
+                time += unit.getEstimatedTime().getTimeInMinutes();
+            }
+            timeList.add((float) (time / 60.0));
+        }
+        ArrayList<RadarEntry> activity = new ArrayList<>();
+
+        for (Float f : timeList) {
+//            if (f > 0f) {
+                activity.add(new RadarEntry(f));
+//            }
+        }
+
+        RadarDataSet radarDataSet = new RadarDataSet(activity, "Activity");
         radarDataSet.setColor(Color.RED);
         radarDataSet.setLineWidth(2f);
         radarDataSet.setValueTextColor(Color.RED);
-        radarDataSet.setValueTextSize(14f);
+        radarDataSet.setValueTextSize(10f);
 
         RadarData radarData = new RadarData();
         radarData.addDataSet(radarDataSet);
 
-        String[] labels = {"2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
+        String[] labels = new String[n];
+        for (int i = 0; i < n; i++) {
+            labels[i] = goals.get(i).getName();
+        }
+
         XAxis xAxis = radarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
