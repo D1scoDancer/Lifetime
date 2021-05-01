@@ -185,7 +185,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(true, TABLE_STATS, null, selection,
                 selectionArgs, null, null, null, null);
-        
+
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(KEY_ID);
             int goalIdIndex = cursor.getColumnIndex(KEY_GOAL_ID);

@@ -95,33 +95,33 @@ public class StatsPlaceholderFragment extends Fragment {
     private void createPieChart(View root) {
         PieChart pieChart = root.findViewById(R.id.pieChart);
 
-        ArrayList<PieEntry> visitors = new ArrayList<>();
-        visitors.add(new PieEntry(420, "2014"));
-        visitors.add(new PieEntry(475, "2015"));
-        visitors.add(new PieEntry(508, "2016"));
-        visitors.add(new PieEntry(520, "2017"));
-        visitors.add(new PieEntry(400, "2018"));
-        visitors.add(new PieEntry(370, "2019"));
-        visitors.add(new PieEntry(100, "2020"));
+        GoalDBHelper goalDBHelper = new GoalDBHelper(root.getContext());
+        SQLiteDatabase db = goalDBHelper.getReadableDatabase();
+        List<Goal> goals = goalDBHelper.readAllGoals(db);
 
-        PieDataSet pieDataSet = new PieDataSet(visitors, "Visitors");
+        ArrayList<PieEntry> visitors = new ArrayList<>();
+
+        for (Goal goal : goals) {
+            if(goal.getTime().getTimeInHours() != 0){
+                visitors.add(new PieEntry((float) goal.getTime().getTimeInHours(), goal.getName()));
+            }
+        }
+
+        PieDataSet pieDataSet = new PieDataSet(visitors, "Total");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f);
+        pieDataSet.setValueTextSize(16f); 
 
         PieData pieData = new PieData(pieDataSet);
 
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Visitors");
+        pieChart.setCenterText("Total");
         pieChart.animate();
     }
 
     private void createBarChart(View root) {
         BarChart barChart = root.findViewById(R.id.barChart);
-
-        GoalDBHelper goalDBHelper = new GoalDBHelper(root.getContext());
-        SQLiteDatabase db = goalDBHelper.getReadableDatabase();
 
         StatsDBHelper statsDBHelper = new StatsDBHelper(root.getContext());
         SQLiteDatabase db2 = statsDBHelper.getReadableDatabase();
