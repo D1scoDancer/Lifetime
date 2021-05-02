@@ -345,6 +345,8 @@ public class GoalActivity extends AppCompatActivity {
 
         barChart.getLegend().setEnabled(false);
 
+        barChart.setDrawValueAboveBar(false);
+
         barChart.notifyDataSetChanged();
         barChart.invalidate();
     }
