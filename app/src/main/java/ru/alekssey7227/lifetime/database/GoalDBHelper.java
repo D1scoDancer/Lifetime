@@ -109,29 +109,4 @@ public class GoalDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return goal;
     }
-
-    public List<Goal> getAllByDescendingTime(SQLiteDatabase db) {
-        List<Goal> goalList = new ArrayList<>();
-
-        Cursor cursor = db.query(TABLE_GOALS, null, null, null,
-                null, null, KEY_TIME + " DESC");
-
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(KEY_ID);
-            int nameIndex = cursor.getColumnIndex(KEY_NAME);
-            int timeIndex = cursor.getColumnIndex(KEY_TIME);
-            int iterationIndex = cursor.getColumnIndex(KEY_ITERATION);
-            int imageIndex = cursor.getColumnIndex(KEY_IMAGE);
-
-            do {
-                Goal goal = new Goal(cursor.getInt(idIndex), cursor.getString(nameIndex),
-                        cursor.getInt(timeIndex), cursor.getInt(iterationIndex), cursor.getInt(imageIndex));
-
-                goalList.add(goal);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        return goalList;
-    }
 }

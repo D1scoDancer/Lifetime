@@ -98,27 +98,18 @@ public class StatsPlaceholderFragment extends Fragment {
 
         GoalDBHelper goalDBHelper = new GoalDBHelper(root.getContext());
         SQLiteDatabase db = goalDBHelper.getReadableDatabase();
-        List<Goal> goals = goalDBHelper.getAllByDescendingTime(db);
+        List<Goal> goals = goalDBHelper.readAllGoals(db);
 
         ArrayList<PieEntry> totalTime = new ArrayList<>();
 
-        int maximum = 10;
-
-        for (int i =0; i < maximum && i < goals.size(); i++) {
-            if (goals.get(i).getTime().getTimeInHours() != 0) {
-                totalTime.add(new PieEntry((float) goals.get(i).getTime().getTimeInHours(), goals.get(i).getName()));
+        for (Goal goal : goals) {
+            if (goal.getTime().getTimeInHours() != 0) {
+                totalTime.add(new PieEntry((float) goal.getTime().getTimeInHours(), goal.getName()));
             }
         }
 
         PieDataSet pieDataSet = new PieDataSet(totalTime, "");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        for (int color: ColorTemplate.JOYFUL_COLORS){
-            pieDataSet.addColor(color);
-        }
-        for (int color: ColorTemplate.LIBERTY_COLORS){
-            pieDataSet.addColor(color);
-        }
-
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
 
