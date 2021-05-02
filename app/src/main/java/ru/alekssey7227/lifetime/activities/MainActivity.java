@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolBar;
     private RecyclerView goalsRV;
     private GoalDBHelper dbHelper;
+    private Drawer result;
 
     private static MainActivity instance;
 
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_action_settings).withSelectable(false);
 //        SecondaryDrawerItem nightMode  TODO: если получится, то сделать свитчер для ночного режима
 
-        Drawer result = new DrawerBuilder()
+        result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolBar)
                 .withAccountHeader(headerResult)
@@ -133,6 +134,13 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        result.closeDrawer();
     }
 
     private void setAlarm() {
