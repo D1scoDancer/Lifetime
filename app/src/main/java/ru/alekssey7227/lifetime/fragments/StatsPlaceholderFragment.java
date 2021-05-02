@@ -2,6 +2,7 @@ package ru.alekssey7227.lifetime.fragments;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -204,6 +205,13 @@ public class StatsPlaceholderFragment extends Fragment {
         List<Goal> goals = goalDBHelper.readAllGoals(db);
         int n = goals.size();
 
+        if (n < 3) {
+            radarChart.setNoDataTextColor(Color.BLACK);
+            radarChart.setNoDataTextTypeface(Typeface.DEFAULT_BOLD);
+            radarChart.setNoDataText("Not enough goals. Need at least 3");
+            return;
+        }
+
         ArrayList<Float> timeList = new ArrayList<>();
 
         for (Goal goal : goals) {
@@ -218,7 +226,7 @@ public class StatsPlaceholderFragment extends Fragment {
 
         for (Float f : timeList) {
 //            if (f > 0f) {
-                activity.add(new RadarEntry(f));
+            activity.add(new RadarEntry(f));
 //            }
         }
 
