@@ -58,13 +58,13 @@ public class StatsDBHelper extends SQLiteOpenHelper {
 
         int updCount = db.update(TABLE_STATS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(unit.getId())});
 
-        Log.d("mLog", "updates row count = " + updCount);
+        Log.d("mLog", "S: updates row count = " + updCount);
     }
 
     public void deleteStatsUnits(SQLiteDatabase db, int goal_id) {
         int delCount = db.delete(TABLE_STATS, KEY_ID + "=" + goal_id, null);
 
-        Log.d("mLog", "deleted rows count = " + delCount);
+        Log.d("mLog", "S: deleted rows count = " + delCount);
     }
 
     public StatsUnit get(int goal_id, int day, int month, int year) {

@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import ru.alekssey7227.lifetime.backend.Goal;
 
@@ -80,13 +79,13 @@ public class GoalDBHelper extends SQLiteOpenHelper {
 
         int updCount = db.update(TABLE_GOALS, contentValues, KEY_ID + "= ?", new String[]{String.valueOf(goal.getId())});
 
-        Log.d("mLog", "updates row count = " + updCount);
+        Log.d("mLog", "G: updates row count = " + updCount);
     }
 
     public void deleteGoal(SQLiteDatabase db, Goal goal) {
         int delCount = db.delete(TABLE_GOALS, KEY_ID + "=" + goal.getId(), null);
 
-        Log.d("mLog", "deleted rows count = " + delCount);
+        Log.d("mLog", "G: deleted rows count = " + delCount);
     }
 
     public Goal getById(SQLiteDatabase db, int id) {

@@ -156,5 +156,4 @@ public class MainActivity extends AppCompatActivity {
 
         alarmManager.setRepeating(AlarmManager.RTC, ms, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
-
 }

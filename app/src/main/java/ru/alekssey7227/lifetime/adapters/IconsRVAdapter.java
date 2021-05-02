@@ -42,7 +42,6 @@ public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHold
         holder.parent.setOnClickListener(v -> {
             ((Callback) iconDialogFragment).onEvent(position);
         });
-
     }
 
     @Override

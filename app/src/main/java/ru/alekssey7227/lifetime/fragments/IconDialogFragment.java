@@ -40,9 +40,8 @@ public class IconDialogFragment extends DialogFragment implements IconsRVAdapter
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.icon_fragment, container, false);
 
-        return view;
+        return inflater.inflate(R.layout.icon_fragment, container, false);
     }
 
     @Override
@@ -53,7 +52,6 @@ public class IconDialogFragment extends DialogFragment implements IconsRVAdapter
         IconsRVAdapter adapter = new IconsRVAdapter(MainActivity.getInstance(), this);
         iconsRV.setAdapter(adapter);
         iconsRV.setLayoutManager(new GridLayoutManager(view.getContext(), 5));
-
     }
 
     @Override
