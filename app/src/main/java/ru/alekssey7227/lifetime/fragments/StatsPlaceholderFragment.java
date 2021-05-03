@@ -32,6 +32,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -247,12 +249,18 @@ public class StatsPlaceholderFragment extends Fragment {
             }
             timeList.add((float) (time / 60.0));
         }
+
+        List<Pair> pairs = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            pairs.add(new Pair(goals.get(i), timeList.get(i)));
+        }
+        Collections.sort(pairs);
+        Collections.reverse(pairs);
+
         ArrayList<RadarEntry> activity = new ArrayList<>();
 
-        for (Float f : timeList) {
-//            if (f > 0f) {
-            activity.add(new RadarEntry(f));
-//            }
+        for (int i = 0; i < n && i < maximum; i++) {
+            activity.add(new RadarEntry(pairs.get(i).eTime));
         }
 
         RadarDataSet radarDataSet = new RadarDataSet(activity, "Activity"); //TODO: оставляю для информативности
@@ -274,8 +282,8 @@ public class StatsPlaceholderFragment extends Fragment {
         });
 
         String[] labels = new String[n];
-        for (int i = 0; i < n; i++) {
-            String label = goals.get(i).getName();
+        for (int i = 0; i < n && i < maximum; i++) {
+            String label = pairs.get(i).goal.getName();
             if (label.length() > 10) {
                 label = label.substring(0, 8) + "..";
             }
@@ -302,5 +310,20 @@ public class StatsPlaceholderFragment extends Fragment {
 
         radarChart.notifyDataSetChanged();
         radarChart.invalidate();
+    }
+}
+
+class Pair implements Comparable<Pair> {
+    public Goal goal;
+    public Float eTime;
+
+    public Pair(Goal goal, Float eTime) {
+        this.goal = goal;
+        this.eTime = eTime;
+    }
+
+    @Override
+    public int compareTo(Pair o) {
+        return Float.compare(eTime, o.eTime);
     }
 }
