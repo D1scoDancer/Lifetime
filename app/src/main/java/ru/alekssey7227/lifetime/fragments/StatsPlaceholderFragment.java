@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -103,18 +104,22 @@ public class StatsPlaceholderFragment extends Fragment {
 
         int maximum = 10;
 
-        for (int i =0; i < maximum && i < goals.size(); i++) {
+        for (int i = 0; i < maximum && i < goals.size(); i++) {
             if (goals.get(i).getTime().getTimeInHours() != 0) {
-                totalTime.add(new PieEntry((float) goals.get(i).getTime().getTimeInHours(), goals.get(i).getName()));
+                String label = goals.get(i).getName();
+                if (label.length() > 10) {
+                    label = label.substring(0, 10) + "..";
+                }
+                totalTime.add(new PieEntry((float) goals.get(i).getTime().getTimeInHours(), label));
             }
         }
 
         PieDataSet pieDataSet = new PieDataSet(totalTime, "");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        for (int color: ColorTemplate.JOYFUL_COLORS){
+        for (int color : ColorTemplate.JOYFUL_COLORS) {
             pieDataSet.addColor(color);
         }
-        for (int color: ColorTemplate.LIBERTY_COLORS){
+        for (int color : ColorTemplate.LIBERTY_COLORS) {
             pieDataSet.addColor(color);
         }
 
@@ -122,6 +127,15 @@ public class StatsPlaceholderFragment extends Fragment {
         pieDataSet.setValueTextSize(16f);
 
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == (int) value)
+                    return String.format(Locale.ENGLISH, "%d", (int) value);
+                else
+                    return String.format(Locale.ENGLISH, "%s", value);
+            }
+        });
 
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
@@ -214,6 +228,7 @@ public class StatsPlaceholderFragment extends Fragment {
 
         List<Goal> goals = goalDBHelper.readAllGoals(db);
         int n = goals.size();
+        int maximum = 10;
 
         if (n < 3) {
             radarChart.setNoDataTextColor(Color.BLACK);
@@ -246,12 +261,25 @@ public class StatsPlaceholderFragment extends Fragment {
         radarDataSet.setValueTextColor(Color.RED);
         radarDataSet.setValueTextSize(10f);
 
-        RadarData radarData = new RadarData();
-        radarData.addDataSet(radarDataSet);
+        RadarData radarData = new RadarData(radarDataSet);
+
+        radarData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == (int) value)
+                    return String.format(Locale.ENGLISH, "%d", (int) value);
+                else
+                    return String.format(Locale.ENGLISH, "%s", value);
+            }
+        });
 
         String[] labels = new String[n];
         for (int i = 0; i < n; i++) {
-            labels[i] = goals.get(i).getName();
+            String label = goals.get(i).getName();
+            if (label.length() > 10) {
+                label = label.substring(0, 8) + "..";
+            }
+            labels[i] = label;
         }
 
         XAxis xAxis = radarChart.getXAxis();
@@ -260,6 +288,17 @@ public class StatsPlaceholderFragment extends Fragment {
 
         radarChart.getDescription().setEnabled(false);
         radarChart.setData(radarData);
+
+        radarChart.getLegend().setEnabled(false);
+
+        radarChart.getYAxis().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(Locale.ENGLISH, "%.1f", value);
+            }
+        });
+
+        radarChart.getYAxis().setAxisMinimum(0f);
 
         radarChart.notifyDataSetChanged();
         radarChart.invalidate();
