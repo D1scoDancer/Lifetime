@@ -132,10 +132,15 @@ public class StatsPlaceholderFragment extends Fragment {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if (value == (int) value)
-                    return String.format(Locale.ENGLISH, "%d", (int) value);
-                else
-                    return String.format(Locale.ENGLISH, "%s", value);
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else if (v % 10 == 0) {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                } else {
+                    return String.format(Locale.ENGLISH, "%.2f", v / 100.0);
+                }
             }
         });
 
@@ -183,10 +188,15 @@ public class StatsPlaceholderFragment extends Fragment {
         barDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if (value == (int) value)
-                    return String.format(Locale.ENGLISH, "%d", (int) value);
-                else
-                    return String.format(Locale.ENGLISH, "%s", value);
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else if (v % 10 == 0) {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                } else {
+                    return String.format(Locale.ENGLISH, "%.2f", v / 100.0);
+                }
             }
         });
 
@@ -276,10 +286,15 @@ public class StatsPlaceholderFragment extends Fragment {
         radarData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if (value == (int) value)
-                    return String.format(Locale.ENGLISH, "%d", (int) value);
-                else
-                    return String.format(Locale.ENGLISH, "%s", value);
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else if (v % 10 == 0) {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                } else {
+                    return String.format(Locale.ENGLISH, "%.2f", v / 100.0);
+                }
             }
         });
 
