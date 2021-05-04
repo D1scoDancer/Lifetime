@@ -62,7 +62,7 @@ public class StatsDBHelper extends SQLiteOpenHelper {
     }
 
     public void deleteStatsUnits(SQLiteDatabase db, int goal_id) {
-        int delCount = db.delete(TABLE_STATS, KEY_ID + "=" + goal_id, null);
+        int delCount = db.delete(TABLE_STATS, KEY_GOAL_ID + "=" + goal_id, null);
 
         Log.d("mLog", "S: deleted rows count = " + delCount);
     }
