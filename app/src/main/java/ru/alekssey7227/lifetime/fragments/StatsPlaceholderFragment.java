@@ -110,7 +110,7 @@ public class StatsPlaceholderFragment extends Fragment {
             if (goals.get(i).getTime().getTimeInHours() != 0) {
                 String label = goals.get(i).getName();
                 if (label.length() > 10) {
-                    label = label.substring(0, 10) + "..";
+                    label = label.substring(0, 8) + "..";
                 }
                 totalTime.add(new PieEntry((float) goals.get(i).getTime().getTimeInHours(), label));
             }
@@ -144,6 +144,8 @@ public class StatsPlaceholderFragment extends Fragment {
         pieChart.setCenterText("Total"); //TODO: оставляю для информативности
         pieChart.setCenterTextSize(18f);
         pieChart.animate();
+
+        pieChart.getLegend().setWordWrapEnabled(true);
 
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
