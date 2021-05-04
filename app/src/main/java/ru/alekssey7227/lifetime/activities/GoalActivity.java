@@ -1,10 +1,18 @@
 package ru.alekssey7227.lifetime.activities;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +21,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +71,10 @@ public class GoalActivity extends AppCompatActivity {
     private boolean isPaused;
     private int goalId;
 
+    private NotificationManager nm;
+    private static final int NOTIFICATION_ID = 123;
+    private static final String NOTIFICATION_CHANNEL_ID = "myChannelId";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +114,8 @@ public class GoalActivity extends AppCompatActivity {
         goal = dbHelper.getById(database, id);
 
         createBarChart();
+
+        nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     @Override
@@ -223,6 +238,8 @@ public class GoalActivity extends AppCompatActivity {
         btnStart.setEnabled(false);
         btnPause.setEnabled(true);
         btnStop.setEnabled(true);
+
+        showNotification();
     }
 
     public void onPauseButton(View v) {
@@ -262,10 +279,11 @@ public class GoalActivity extends AppCompatActivity {
         handleStatsDB(goal, m);
         createBarChart();
 
-
         btnStart.setEnabled(true);
         btnPause.setEnabled(false);
         btnStop.setEnabled(false);
+
+        stopNotification();
     }
 
     private void handleStatsDB(Goal goal, long m) {
@@ -350,4 +368,44 @@ public class GoalActivity extends AppCompatActivity {
         barChart.notifyDataSetChanged();
         barChart.invalidate();
     }
+
+    private void showNotification() {
+        Notification.Builder builder = new Notification.Builder(getApplicationContext());
+
+        Intent intent = new Intent(getApplicationContext(), GoalActivity.class);
+        intent.putExtra(GoalsRVAdapter.MAIN_ACTIVITY_EXTRA, goal.getId());
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        builder
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ga_1_medal)
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ga_1_medal))
+                .setTicker("Timer started")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(false)
+                .setContentTitle(goal.getName())
+                .setContentText("Timer is running")
+                .setProgress(100, 20, true)
+        ;
+
+        Notification notification = builder.build();
+        notification.flags = notification.flags | Notification.FLAG_ONGOING_EVENT;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID, "My notification channel",
+                    NotificationManager.IMPORTANCE_LOW);
+            nm.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        }
+
+        nm.notify(NOTIFICATION_ID, notification);
+
+        Toast.makeText(this, "show Notification", Toast.LENGTH_SHORT).show();
+    }
+
+    private void stopNotification() {
+        nm.cancel(NOTIFICATION_ID);
+    }
+
 }
