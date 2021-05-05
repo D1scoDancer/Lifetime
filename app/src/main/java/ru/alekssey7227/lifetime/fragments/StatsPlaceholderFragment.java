@@ -102,11 +102,19 @@ public class StatsPlaceholderFragment extends Fragment {
         SQLiteDatabase db = goalDBHelper.getReadableDatabase();
         List<Goal> goals = goalDBHelper.getAllByDescendingTime(db);
 
+        for (int i = 1, j = goals.size() - 1; i < goals.size() / 2 && j > goals.size() / 2; i+=2, j--)
+        {
+            Goal temp = goals.get(i);
+            goals.set(i, goals.get(j));
+            goals.set(j, temp);
+        }
+
         ArrayList<PieEntry> totalTime = new ArrayList<>();
 
         int maximum = 10;
 
         for (int i = 0; i < maximum && i < goals.size(); i++) {
+
             if (goals.get(i).getTime().getTimeInHours() != 0) {
                 String label = goals.get(i).getName();
                 if (label.length() > 10) {
