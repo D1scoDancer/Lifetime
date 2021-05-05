@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -381,10 +382,13 @@ public class GoalActivity extends AppCompatActivity {
         intent.putExtra(GoalsRVAdapter.MAIN_ACTIVITY_EXTRA, goal.getId());
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
+        TypedArray icons = getApplicationContext().getResources().obtainTypedArray(R.array.goal_icons);
+        int icon =  icons.getResourceId(goal.getImage(), 0);
+
         builder
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ga_1_medal)
-                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ga_1_medal))
+                .setSmallIcon(icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), icon))
                 .setTicker("Timer started")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(false)
@@ -405,12 +409,9 @@ public class GoalActivity extends AppCompatActivity {
         }
 
         nm.notify(NOTIFICATION_ID, notification);
-
-        Toast.makeText(this, "show Notification", Toast.LENGTH_SHORT).show();
     }
 
     private void stopNotification() {
         nm.cancel(NOTIFICATION_ID);
     }
-
 }
