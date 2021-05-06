@@ -4,36 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.StatsActivity"
-    android:theme="@style/Theme.Lifetime">
+    android:theme="@style/Theme.Lifetime"
+    tools:context=".activities.StatsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/GA_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/indigo_500"
-            app:titleTextColor="@color/white"
-            app:layout_collapseMode="pin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/stats_appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:expanded="false"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/GA_toolbar"
-            app:tabSelectedTextColor="@color/gray_500"
-            app:tabTextColor="@color/gray_300" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/GA_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/GA_toolbar"
+                app:tabSelectedTextColor="@color/gray_500"
+                app:tabTextColor="@color/gray_300" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
@@ -41,7 +50,7 @@
             android:layout_height="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+            app:layout_constraintTop_toBottomOf="@+id/stats_appBarLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
