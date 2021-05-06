@@ -232,6 +232,29 @@ public class StatsPlaceholderFragment extends Fragment {
 
         barChart.getAxisLeft().setAxisMinimum(0f);
         barChart.getAxisRight().setAxisMinimum(0f);
+        barChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                }
+        });
+        barChart.getAxisRight().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                }
+            }
+        });
 
         barChart.setDrawValueAboveBar(false);
 
@@ -276,6 +299,13 @@ public class StatsPlaceholderFragment extends Fragment {
         }
         Collections.sort(pairs);
         Collections.reverse(pairs);
+
+        for (int i = 1, j = pairs.size() - 1; i < pairs.size() / 2 && j > pairs.size() / 2; i+=2, j--)
+        {
+            Pair temp = pairs.get(i);
+            pairs.set(i, pairs.get(j));
+            pairs.set(j, temp);
+        }
 
         ArrayList<RadarEntry> activity = new ArrayList<>();
 

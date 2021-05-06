@@ -14,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -366,6 +364,30 @@ public class GoalActivity extends AppCompatActivity {
 
         barChart.getAxisLeft().setAxisMinimum(0f);
         barChart.getAxisRight().setAxisMinimum(0f);
+        barChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                }
+            }
+        });
+        barChart.getAxisRight().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                long v = Math.round(value * 100.0);
+
+                if (v % 100 == 0) {
+                    return String.format(Locale.ENGLISH, "%d", (int) (v / 100.0));
+                } else {
+                    return String.format(Locale.ENGLISH, "%.1f", v / 100.0);
+                }
+            }
+        });
 
         barChart.getLegend().setEnabled(false);
 
@@ -383,7 +405,7 @@ public class GoalActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         TypedArray icons = getApplicationContext().getResources().obtainTypedArray(R.array.goal_icons);
-        int icon =  icons.getResourceId(goal.getImage(), 0);
+        int icon = icons.getResourceId(goal.getImage(), 0);
 
         builder
                 .setContentIntent(pendingIntent)
