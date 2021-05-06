@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
@@ -79,7 +80,7 @@ public class StatsActivity extends AppCompatActivity {
                     result.closeDrawer();
                     break;
                 case 4:
-                    Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, SettingsActivity.class));
                     break;
                 default:
                     break;

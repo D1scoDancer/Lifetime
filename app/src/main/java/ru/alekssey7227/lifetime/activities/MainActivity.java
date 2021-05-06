@@ -123,11 +123,10 @@ public class MainActivity extends AppCompatActivity {
                     result.closeDrawer();
                     break;
                 case 2:
-                    Intent intent = new Intent(this, StatsActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(this, StatsActivity.class));
                     break;
                 case 4:
-                    Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, SettingsActivity.class));
                     break;
                 default:
                     break;

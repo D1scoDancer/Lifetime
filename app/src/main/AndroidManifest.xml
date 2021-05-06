@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lifetime">
         <activity
+            android:name=".activities.SettingsActivity"
+            android:label="Settings" />
+        <activity
             android:name=".activities.StatsActivity"
             android:label="@string/title_activity_stats"
-            android:theme="@style/Theme.Lifetime.NoActionBar"></activity>
+            android:theme="@style/Theme.Lifetime.NoActionBar" />
         <activity
             android:name=".activities.GoalActivity"
             android:parentActivityName=".activities.MainActivity" />
@@ -28,7 +31,6 @@
             android:name=".others.MyAlarm"
             android:enabled="true"
             android:exported="true" />
-
     </application>
 
 </manifest>
