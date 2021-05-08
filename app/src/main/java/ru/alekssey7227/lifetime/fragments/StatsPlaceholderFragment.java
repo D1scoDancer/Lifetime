@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -160,6 +162,13 @@ public class StatsPlaceholderFragment extends Fragment {
 
         pieChart.getLegend().setWordWrapEnabled(true);
 
+        int nightMode = root.getContext().getSharedPreferences("night_mode", Context.MODE_PRIVATE).getInt("mode", -1);
+        if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+            pieChart.getLegend().setTextColor(Color.WHITE);
+            pieChart.setCenterTextColor(Color.WHITE);
+            pieChart.setHoleColor(Color.parseColor("#121212"));
+        }
+
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
     }
@@ -257,6 +266,15 @@ public class StatsPlaceholderFragment extends Fragment {
         });
 
         barChart.setDrawValueAboveBar(false);
+
+        int nightMode = root.getContext().getSharedPreferences("night_mode", Context.MODE_PRIVATE).getInt("mode", -1);
+        if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+            barChart.getAxisRight().setTextColor(Color.WHITE);
+            barChart.getAxisLeft().setTextColor(Color.WHITE);
+            barChart.getXAxis().setTextColor(Color.WHITE);
+            barChart.getLegend().setTextColor(Color.WHITE);
+            barDataSet.setValueTextColor(Color.WHITE);
+        }
 
         barChart.notifyDataSetChanged();
         barChart.invalidate();
@@ -362,6 +380,13 @@ public class StatsPlaceholderFragment extends Fragment {
         });
 
         radarChart.getYAxis().setAxisMinimum(0f);
+
+
+        int nightMode = root.getContext().getSharedPreferences("night_mode", Context.MODE_PRIVATE).getInt("mode", -1);
+        if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+            radarChart.getXAxis().setTextColor(Color.WHITE);
+            radarChart.getYAxis().setTextColor(Color.WHITE);
+        }
 
         radarChart.notifyDataSetChanged();
         radarChart.invalidate();

@@ -24,9 +24,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -392,6 +394,14 @@ public class GoalActivity extends AppCompatActivity {
         barChart.getLegend().setEnabled(false);
 
         barChart.setDrawValueAboveBar(false);
+
+        int nightMode = getSharedPreferences("night_mode", MODE_PRIVATE).getInt("mode", -1);
+        if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+            barChart.getAxisRight().setTextColor(Color.WHITE);
+            barChart.getAxisLeft().setTextColor(Color.WHITE);
+            barChart.getXAxis().setTextColor(Color.WHITE);
+            barDataSet.setValueTextColor(Color.WHITE);
+        }
 
         barChart.notifyDataSetChanged();
         barChart.invalidate();
