@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Lifetime"
     tools:context=".activities.StatsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +14,7 @@
             android:id="@+id/stats_appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:theme="@style/Theme.Lifetime.AppBarOverlay"
             app:expanded="false"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -40,6 +40,13 @@ public class StatsActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        SharedPreferences preferences = getSharedPreferences("night_mode", MODE_PRIVATE);
+        int nightMode = preferences.getInt("mode", -1);
+        if (nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO) {
+            tabs.setBackgroundColor(Color.parseColor("#121212"));
+            tabs.setTabTextColors(Color.WHITE, Color.GRAY);
+        }
+
         gaToolbar = findViewById(R.id.GA_toolbar);
         setSupportActionBar(gaToolbar);
 
@@ -73,19 +80,19 @@ public class StatsActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("night_mode", MODE_PRIVATE);
         int nightMode = preferences.getInt("mode", -1);
-        if(nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO){
+        if (nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO) {
             builder.withSliderBackgroundColor(Color.parseColor("#121212"));
 
             Drawable homeWhite = ContextCompat.getDrawable(this, R.drawable.ic_home);
             Drawable statsWhite = ContextCompat.getDrawable(this, R.drawable.ic_bar_chart);
             Drawable settingsWhite = ContextCompat.getDrawable(this, R.drawable.ic_action_settings);
-            if(homeWhite!= null){
+            if (homeWhite != null) {
                 homeWhite.setTint(Color.WHITE);
             }
-            if(statsWhite!= null){
+            if (statsWhite != null) {
                 statsWhite.setTint(Color.WHITE);
             }
-            if(settingsWhite!= null){
+            if (settingsWhite != null) {
                 settingsWhite.setTint(Color.WHITE);
             }
 
