@@ -1,6 +1,9 @@
 package ru.alekssey7227.lifetime.adapters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.alekssey7227.lifetime.R;
@@ -57,6 +61,12 @@ public class IconsRVAdapter extends RecyclerView.Adapter<IconsRVAdapter.ViewHold
             super(itemView);
             iv_icon = itemView.findViewById(R.id.iv_icon);
             parent = itemView.findViewById(R.id.icon_parent);
+
+            SharedPreferences preferences = mainActivity.getSharedPreferences("night_mode", Context.MODE_PRIVATE);
+            int nightMode = preferences.getInt("mode", -1);
+            if (nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO) {
+                parent.setBackgroundColor(Color.parseColor("#101010")); //TODO: выбрать цвет
+            }
         }
     }
 

@@ -2,9 +2,12 @@ package ru.alekssey7227.lifetime.fragments;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +16,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -61,7 +66,15 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Lifetime_FullScreenDialog);
+
+        SharedPreferences preferences = getContext().getSharedPreferences("night_mode", Context.MODE_PRIVATE);
+        int nightMode = preferences.getInt("mode", -1);
+        if (nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO) {
+            setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Lifetime_FullScreenDialog_Night);
+        } else {
+            setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Lifetime_FullScreenDialog_Light);
+        }
+
     }
 
     @Nullable
@@ -75,7 +88,6 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         text_input_time = view.findViewById(R.id.text_input_time);
         text_input_iteration = view.findViewById(R.id.text_input_iteration);
         iv_goalIcon = view.findViewById(R.id.iv_goalIcon);
-
         return view;
     }
 
@@ -113,7 +125,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
                     SQLiteDatabase db2 = statsDBHelper.getWritableDatabase();
 
                     ContentValues cv = new ContentValues();
-                    cv.put(StatsDBHelper.KEY_GOAL_ID, goals.get(goals.size()-1).getId());
+                    cv.put(StatsDBHelper.KEY_GOAL_ID, goals.get(goals.size() - 1).getId());
                     cv.put(StatsDBHelper.KEY_DAY, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                     cv.put(StatsDBHelper.KEY_MONTH, Calendar.getInstance().get(Calendar.MONTH) + 1);
                     cv.put(StatsDBHelper.KEY_YEAR, Calendar.getInstance().get(Calendar.YEAR));
