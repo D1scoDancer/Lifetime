@@ -15,7 +15,6 @@
         <item name="colorSurface">@color/gray_500</item>
     </style>
 
-    <!--    TODO: переименовать в Theme.Lifetime-->
     <style name="Theme.Lifetime.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorAccent">@color/teal_200</item>
