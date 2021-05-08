@@ -16,7 +16,7 @@
     </style>
 
     <!--    TODO: переименовать в Theme.Lifetime-->
-    <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+    <style name="Theme.Lifetime.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorAccent">@color/teal_200</item>
         <item name="colorPrimary">@color/purple_500</item>
@@ -25,12 +25,12 @@
         <item name="actionMenuTextColor">@color/white</item>
     </style>
 
-    <style name="AppTheme.Slide">
+    <style name="Lifetime.Slide">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
-    <style name="AppTheme"></style>
+    <style name="Lifetime" />
 
     <style name="Theme.Lifetime.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -61,7 +61,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_FullScreenDialog);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Lifetime_FullScreenDialog);
     }
 
     @Nullable
@@ -155,7 +155,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
-            dialog.getWindow().setWindowAnimations(R.style.AppTheme_Slide);
+            dialog.getWindow().setWindowAnimations(R.style.Lifetime_Slide);
         }
     }
 
