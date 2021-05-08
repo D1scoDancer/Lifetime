@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -111,19 +114,38 @@ public class MainActivity extends AppCompatActivity {
         PrimaryDrawerItem statistics = new PrimaryDrawerItem().withName("Statistics").withIcon(R.drawable.ic_bar_chart).withSelectable(false);
 
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_action_settings).withSelectable(false);
-//        SecondaryDrawerItem nightMode  TODO: если получится, то сделать свитчер для ночного режима
 
-        result = new DrawerBuilder()
+        DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolBar)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(home, statistics, new DividerDrawerItem(), settings)
-                .withSelectedItem(-2)
-                .build();
+                .withSelectedItem(-2);
 
+        SharedPreferences preferences = getSharedPreferences("night_mode", MODE_PRIVATE);
+        int nightMode = preferences.getInt("mode", -1);
+        if(nightMode != -1 && nightMode != AppCompatDelegate.MODE_NIGHT_NO){
+            builder.withSliderBackgroundColor(Color.parseColor("#121212"));
 
-        SecondaryDrawerItem footer = new SecondaryDrawerItem().withName("Made by Aleksey Shulikov").withSelectable(false);
-        result.addStickyFooterItem(footer);
+            Drawable homeWhite = ContextCompat.getDrawable(this, R.drawable.ic_home);
+            Drawable statsWhite = ContextCompat.getDrawable(this, R.drawable.ic_bar_chart);
+            Drawable settingsWhite = ContextCompat.getDrawable(this, R.drawable.ic_action_settings);
+            if(homeWhite!= null){
+                homeWhite.setTint(Color.WHITE);
+            }
+            if(statsWhite!= null){
+                statsWhite.setTint(Color.WHITE);
+            }
+            if(settingsWhite!= null){
+                settingsWhite.setTint(Color.WHITE);
+            }
+
+            home.withTextColor(Color.WHITE).withIconColor(Color.WHITE).withIcon(homeWhite);
+            statistics.withTextColor(Color.WHITE).withIconColor(Color.WHITE).withIcon(statsWhite);
+            settings.withTextColor(Color.WHITE).withIconColor(Color.WHITE).withIcon(settingsWhite);
+        }
+
+        result = builder.build();
 
         result.setOnDrawerItemClickListener((view, position, drawerItem) -> {
             switch (position) {
