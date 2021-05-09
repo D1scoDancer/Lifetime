@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         result.closeDrawer();
+        rvUpdate();
     }
 
     private void setAlarm() {
