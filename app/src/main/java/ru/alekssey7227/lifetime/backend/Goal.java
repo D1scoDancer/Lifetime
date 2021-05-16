@@ -1,7 +1,6 @@
 package ru.alekssey7227.lifetime.backend;
 
 public class Goal {
-    private static final Time DEFAULT_ITERATION = new Time(60);
 
     private int id;
 
@@ -13,36 +12,12 @@ public class Goal {
 
     private int image;
 
-    public Goal(int id, String name, Time time, Time iteration, int image) {
-        this.id = id;
-        this.name = name;
-        this.time = time;
-        this.iteration = iteration;
-        this.image = image;
-    }
-
     public Goal(int id, String name, long time, long iteration, int image){
         this.id = id;
         this.name = name;
         this.time = new Time(time);
         this.iteration = new Time(iteration);
         this.image = image;
-    }
-
-    public Goal(int id, String name, Time time) {
-        this.id = id;
-        this.name = name;
-        this.time = time;
-        iteration = DEFAULT_ITERATION;
-        image = 0;
-    }
-
-    public Goal(int id) {
-        this.id = id;
-        name = "Chess";
-        time = new Time(0);
-        iteration = DEFAULT_ITERATION;
-        image = 0;
     }
 
     public int getId() {
@@ -71,10 +46,6 @@ public class Goal {
 
     public Time getIteration() {
         return iteration;
-    }
-
-    public void setIteration(Time iteration) {
-        this.iteration = iteration;
     }
 
     public int getImage() {

@@ -92,8 +92,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         // BACKUP and RESTORE
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-
         btnImport.setOnClickListener(v -> {
             if (checkStoragePermission()) {
                 importCSV();

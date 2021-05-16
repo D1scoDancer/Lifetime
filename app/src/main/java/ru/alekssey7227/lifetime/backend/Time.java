@@ -39,14 +39,6 @@ public class Time {
         this.minutes = (long) (hours * 60);
     }
 
-    public double getTimeInDays() {
-        return minutes / 60.0 / 24;
-    }
-
-    public void setTimeInDays(long days) {
-        this.minutes = days * 24 * 60;
-    }
-
     public String getTimeInMinutesString() {
         return decimalFormat.format(minutes);
     }
@@ -55,20 +47,8 @@ public class Time {
         return decimalFormat.format(getTimeInHours());
     }
 
-    public String getTimeInDaysString() {
-        return decimalFormat.format(getTimeInDays());
-    }
-
-    public String getTimeInMinutesStringFormatted() {
-        return decimalFormat.format(minutes) + " m";
-    }
-
     public String getTimeInHoursStringFormatted() {
         return decimalFormat.format(getTimeInHours()) + " h";
-    }
-
-    public String getTimeInDaysStringFormatted() {
-        return decimalFormat.format(getTimeInDays() + " d");
     }
 
     @NonNull
