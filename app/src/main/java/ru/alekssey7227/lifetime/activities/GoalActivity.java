@@ -276,7 +276,8 @@ public class GoalActivity extends AppCompatActivity {
         GoalDBHelper dbHelper = new GoalDBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.updateGoal(db, goal);
-
+        txtGATime.setText(goal.getTime().getTimeInHoursStringFormatted());
+        
         handleStatsDB(goal, m);
         createBarChart();
 
