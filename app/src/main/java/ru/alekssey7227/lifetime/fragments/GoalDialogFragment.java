@@ -106,7 +106,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
         toolbar.inflateMenu(R.menu.goal_dialog_menu);
 
         if (_goal == null) {
-            toolbar.setTitle("Creating Goal");
+            toolbar.setTitle(R.string.gdf_creating);
             // добавление новой цели в БД
             toolbar.setOnMenuItemClickListener(item -> {
                 if (validateInput()) {
@@ -137,7 +137,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
                 }
             });
         } else {
-            toolbar.setTitle("Editing Goal");
+            toolbar.setTitle(R.string.gdf_editing);
             // редактирование цели в БД
             toolbar.setOnMenuItemClickListener(item -> {
                 if (validateInput()) {
@@ -201,7 +201,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     private boolean validateName() {
         String name = text_input_name.getEditText().getText().toString().trim();
         if (name.isEmpty()) {
-            text_input_name.setError("Field cannot be empty");
+            text_input_name.setError(getString(R.string.gdf_error_empty));
             return false;
         } else {
             text_input_name.setError(null);
@@ -212,7 +212,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     private boolean validateTime() {
         String time = text_input_time.getEditText().getText().toString().trim();
         if (time.isEmpty()) {
-            text_input_time.setError("Field cannot be empty");
+            text_input_time.setError(getString(R.string.gdf_error_empty));
             return false;
         } else {
             text_input_time.setError(null);
@@ -223,7 +223,7 @@ public class GoalDialogFragment extends DialogFragment implements IconDialogFrag
     private boolean validateIteration() {
         String iteration = text_input_iteration.getEditText().getText().toString().trim();
         if (iteration.isEmpty()) {
-            text_input_iteration.setError("Field cannot be empty");
+            text_input_iteration.setError(getString(R.string.gdf_error_empty));
             return false;
         } else {
             text_input_iteration.setError(null);

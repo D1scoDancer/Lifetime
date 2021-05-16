@@ -6,6 +6,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import ru.alekssey7227.lifetime.R;
+import ru.alekssey7227.lifetime.activities.MainActivity;
+
 //TODO: getProperTime() - класс сам определяет в каком формате вернуть время
 public class Time {
 
@@ -48,7 +51,7 @@ public class Time {
     }
 
     public String getTimeInHoursStringFormatted() {
-        return decimalFormat.format(getTimeInHours()) + " h";
+        return decimalFormat.format(getTimeInHours()) + " " + MainActivity.getInstance().getResources().getString(R.string.time_format);
     }
 
     @NonNull

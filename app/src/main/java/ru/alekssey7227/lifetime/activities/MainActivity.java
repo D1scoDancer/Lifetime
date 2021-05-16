@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.ga_2_lotus_position)
                 .build();
 
-        PrimaryDrawerItem home = new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home).withSelectable(false);
-        PrimaryDrawerItem statistics = new PrimaryDrawerItem().withName("Statistics").withIcon(R.drawable.ic_bar_chart).withSelectable(false);
+        PrimaryDrawerItem home = new PrimaryDrawerItem().withName(R.string.nd_home).withIcon(R.drawable.ic_home).withSelectable(false);
+        PrimaryDrawerItem statistics = new PrimaryDrawerItem().withName(R.string.nd_stats).withIcon(R.drawable.ic_bar_chart).withSelectable(false);
 
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_action_settings).withSelectable(false);
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName(R.string.nd_settings).withIcon(R.drawable.ic_action_settings).withSelectable(false);
 
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lifetime</string>
+
+    <string name="title_activity_stats">Статистика</string>
+    <string name="tab_text_1">Доля</string>
+    <string name="tab_text_2">Прогресс</string>
+    <string name="tab_text_3">Активность</string>
+
+    <string name="nd_home">Цели</string>
+    <string name="nd_stats">Статистика</string>
+    <string name="nd_settings">Настройки</string>
+
+    <string name="ga_total_time">Общее время:</string>
+    <string name="ga_incrementation">Итерация:</string>
+    <string name="ga_btn_start">Начать</string>
+    <string name="ga_btn_stop">Стоп</string>
+    <string name="ga_btn_pause">Пауза</string>
+
+    <string name="gdf_save">сохранить</string>
+    <string name="gdf_name">Имя цели</string>
+    <string name="gdf_time">Время (в часах)</string>
+    <string name="gdf_iteration">Итерация (в часах)</string>
+    <string name="gdf_creating">Создание цели</string>
+    <string name="gdf_editing">Редактирование цели</string>
+    <string name="gdf_error_empty">Поле не может быть пустым</string>
+
+    <string name="time_format">ч</string>
+</resources>
