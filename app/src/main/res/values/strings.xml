@@ -19,14 +19,14 @@
         <item>@drawable/ga_3_graduate</item>
         <item>@drawable/ga_1_chess</item>
         <item>@drawable/ga_1_color_palette</item>
-        <item>@drawable/ga_1_flower</item>
+        <item>@drawable/ga_1_reading</item>
         <item>@drawable/ga_1_clapperboard</item>
         <item>@drawable/ga_3_telescope</item>
         <item>@drawable/ga_1_singing</item>
         <item>@drawable/ga_1_playing_cards</item>
         <item>@drawable/ga_2_running</item>
         <item>@drawable/ga_3_compass</item>
-        <item>@drawable/ga_1_reading</item>
+        <item>@drawable/ga_1_flower</item>
     </string-array>
 
     <string name="title_activity_stats">Statistics</string>
