@@ -267,6 +267,8 @@ public class StatsPlaceholderFragment extends Fragment {
 
         barChart.setDrawValueAboveBar(false);
 
+        barChart.getLegend().setEnabled(false);
+
         int nightMode = root.getContext().getSharedPreferences("night_mode", Context.MODE_PRIVATE).getInt("mode", -1);
         if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
             barChart.getAxisRight().setTextColor(Color.WHITE);
