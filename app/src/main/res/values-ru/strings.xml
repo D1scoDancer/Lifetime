@@ -26,4 +26,19 @@
     <string name="gdf_error_empty">Поле не может быть пустым</string>
 
     <string name="time_format">ч</string>
+
+    <string name="title_settings_activity">Настройки</string>
+    <string name="language_english">Английский</string>
+    <string name="language_russian">Русский</string>
+    <string name="settings_error_backup">Файлы не найдены</string>
+    <string name="settings_backup_saved">Сохранено в: </string>
+    <string name="settings_error">Произошла ошибка</string>
+    <string name="settings_permission">Нужен доступ к файлам</string>
+    <string name="settings_success_import">Сохранение прошло успешно</string>
+    <string name="import_data">Импорт</string>
+    <string name="export_data">Экспорт</string>
+    <string name="dark_mode">Ночной режим</string>
+    <string name="language">Язык</string>
+    <string name="credits">Иконки принадлежат DinosoftLabs с сайта flaticon.com\n Создатель Lifetime - Шуликов Алексей с сайта github.com/D1scoDancer\n Вы можете связаться со мной по почте alekssey7227ru@gmail.com</string>
+
 </resources>

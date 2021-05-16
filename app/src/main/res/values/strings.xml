@@ -53,4 +53,20 @@
     <string name="gdf_error_empty">Field cannot be empty</string>
 
     <string name="time_format">h</string>
+
+    <string name="title_settings_activity">Settings</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Russian</string>
+    <string name="settings_error_backup">No backup found</string>
+    <string name="settings_backup_saved">\"Backup saved to: \"</string>
+    <string name="settings_error">Error occurred</string>
+    <string name="settings_permission">Storage permission required</string>
+    <string name="settings_success_import">Backup restored</string>
+    <string name="import_data">Import data</string>
+    <string name="export_data">Export data</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+    <string name="credits">Icons made by DinosoftLabs from flaticon.com\n Lifetime made by Aleksey Shulikov from github.com/D1scoDancer\n You can contact me at alekssey7227ru@gmail.com</string>
+
+
 </resources>

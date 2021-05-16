@@ -1,13 +1,5 @@
 package ru.alekssey7227.lifetime.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -21,19 +13,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.opencsv.CSVReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.backend.Goal;
@@ -48,7 +46,8 @@ public class SettingsActivity extends AppCompatActivity {
     private SwitchCompat switchDarkMode;
     private Button btnExport;
     private Button btnImport;
-    private final String[] data = new String[]{"English", "Russian"};
+
+    private String[] data;
 
     private static final int STORAGE_REQUEST_CODE_EXPORT = 1;
     private static final int STORAGE_REQUEST_CODE_IMPORT = 2;
@@ -58,6 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        data = new String[]{getString(R.string.language_english), getString(R.string.language_russian)};
 
         sToolBar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(sToolBar);
@@ -105,6 +106,18 @@ public class SettingsActivity extends AppCompatActivity {
                 exportCSV();
             } else {
                 requestStoragePermissionExport();
+            }
+        });
+
+        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(view.getContext(), " " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -189,13 +202,13 @@ public class SettingsActivity extends AppCompatActivity {
 
                     db2.insert(StatsDBHelper.TABLE_STATS, null, cv);
                 }
-                Toast.makeText(this, "Backup restored", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.settings_success_import), Toast.LENGTH_SHORT).show();
 
             } catch (IOException e) {
-                Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.settings_error), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "No backup found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.settings_error_backup), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -258,9 +271,9 @@ public class SettingsActivity extends AppCompatActivity {
             fw2.flush();
             fw2.close();
 
-            Toast.makeText(this, "Backup saved to: " + folder.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.settings_backup_saved) + folder.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.settings_error), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -274,7 +287,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     exportCSV();
                 } else {
-                    Toast.makeText(this, "Storage permission required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.settings_permission), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case STORAGE_REQUEST_CODE_IMPORT:
@@ -282,7 +295,7 @@ public class SettingsActivity extends AppCompatActivity {
                     importCSV();
                     onResume();
                 } else {
-                    Toast.makeText(this, "Storage permission required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,  getString(R.string.settings_permission), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Lifetime">
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="Settings" />
+            android:label="@string/title_settings_activity" />
         <activity
             android:name=".activities.StatsActivity"
             android:label="@string/title_activity_stats"

@@ -31,7 +31,7 @@
         android:id="@+id/txtLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Language"
+        android:text="@string/language"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
         android:id="@+id/spinnerLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/txtLanguage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtLanguage" />
@@ -54,7 +54,7 @@
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Dark Mode"
+        android:text="@string/dark_mode"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
 
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Export data"
+        android:text="@string/export_data"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/txtDarkMode" />
 
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
-        android:text="Import data"
+        android:text="@string/import_data"
         app:layout_constraintBottom_toBottomOf="@+id/btnExport"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,9 +97,7 @@
         android:padding="10dp"
         android:layout_marginTop="30dp"
         android:textSize="11sp"
-        android:text="Icons made by DinosoftLabs from flaticon.com\n
-Lifetime made by Aleksey Shulikov from github.com/D1scoDancer\n
-You can contact me at alekssey7227ru@gmail.com"
+        android:text="@string/credits"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
