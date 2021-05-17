@@ -68,5 +68,8 @@
     <string name="language">Language</string>
     <string name="credits">Icons made by DinosoftLabs from flaticon.com\n Lifetime made by Aleksey Shulikov from github.com/D1scoDancer\n You can contact me at alekssey7227ru@gmail.com</string>
 
+    <string name="piechart_center">Total</string>
+    <string name="radarchart_not_enough">Not enough goals. Need at least 3</string>
+
 
 </resources>

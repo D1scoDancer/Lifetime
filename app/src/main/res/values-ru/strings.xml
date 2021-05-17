@@ -41,4 +41,6 @@
     <string name="language">Язык</string>
     <string name="credits">Иконки принадлежат DinosoftLabs с сайта flaticon.com\n Создатель Lifetime - Шуликов Алексей с сайта github.com/D1scoDancer\n Вы можете связаться со мной по почте alekssey7227ru@gmail.com</string>
 
+    <string name="piechart_center" />
+    <string name="radarchart_not_enough">График отображает минимум 3 цели</string>
 </resources>

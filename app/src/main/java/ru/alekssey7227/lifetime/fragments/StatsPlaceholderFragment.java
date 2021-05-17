@@ -156,7 +156,7 @@ public class StatsPlaceholderFragment extends Fragment {
 
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Total"); //TODO: оставляю для информативности
+        pieChart.setCenterText(getString(R.string.piechart_center));
         pieChart.setCenterTextSize(18f);
         pieChart.animate();
 
@@ -198,7 +198,7 @@ public class StatsPlaceholderFragment extends Fragment {
             hoursPerDay.add(new BarEntry(i, timeList.get(i)));
         }
 
-        BarDataSet barDataSet = new BarDataSet(hoursPerDay, "Total"); //TODO: оставляю для информативности
+        BarDataSet barDataSet = new BarDataSet(hoursPerDay, "Total");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(12f);
@@ -298,7 +298,7 @@ public class StatsPlaceholderFragment extends Fragment {
         if (n < 3) {
             radarChart.setNoDataTextColor(Color.BLACK);
             radarChart.setNoDataTextTypeface(Typeface.DEFAULT_BOLD);
-            radarChart.setNoDataText("Not enough goals. Need at least 3");
+            radarChart.setNoDataText(getString(R.string.radarchart_not_enough));
             return;
         }
 
