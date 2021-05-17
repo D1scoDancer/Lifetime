@@ -2,8 +2,10 @@ package ru.alekssey7227.lifetime.activities;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +41,7 @@ import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.backend.StatsUnit;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
 import ru.alekssey7227.lifetime.database.StatsDBHelper;
+import ru.alekssey7227.lifetime.others.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -54,9 +58,21 @@ public class SettingsActivity extends AppCompatActivity {
     private String[] storagePermissions;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(this, languageCode);
+        Resources resources = context.getResources();
+        setTitle(resources.getString(R.string.title_settings_activity));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
 
         data = new String[]{getString(R.string.language_english), getString(R.string.language_russian)};
 
@@ -109,10 +125,25 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
+        String lang = sharedPreferences.getString("lang", "en");
+        if(lang.equals("ru")){
+            spinnerLanguage.setSelection(1);
+        }
+
         spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if (position == 0) {
+                    editor.putString("lang", "en");
+                    updateViews("en");
+                } else {
+                    editor.putString("lang", "ru");
+                    updateViews("ru");
+                }
+                editor.apply();
             }
 
             @Override
@@ -295,7 +326,7 @@ public class SettingsActivity extends AppCompatActivity {
                     importCSV();
                     onResume();
                 } else {
-                    Toast.makeText(this,  getString(R.string.settings_permission), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.settings_permission), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

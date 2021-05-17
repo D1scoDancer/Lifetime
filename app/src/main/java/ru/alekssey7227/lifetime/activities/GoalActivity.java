@@ -48,6 +48,7 @@ import ru.alekssey7227.lifetime.backend.StatsUnit;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
 import ru.alekssey7227.lifetime.database.StatsDBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
+import ru.alekssey7227.lifetime.others.LocaleHelper;
 
 public class GoalActivity extends AppCompatActivity {
 
@@ -75,6 +76,11 @@ public class GoalActivity extends AppCompatActivity {
     private NotificationManager nm;
     private static final int NOTIFICATION_ID = 123;
     private static final String NOTIFICATION_CHANNEL_ID = "myChannelId";
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

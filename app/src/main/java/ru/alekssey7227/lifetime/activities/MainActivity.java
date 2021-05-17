@@ -36,6 +36,7 @@ import ru.alekssey7227.lifetime.adapters.GoalsRVAdapter;
 import ru.alekssey7227.lifetime.backend.Goal;
 import ru.alekssey7227.lifetime.database.GoalDBHelper;
 import ru.alekssey7227.lifetime.fragments.GoalDialogFragment;
+import ru.alekssey7227.lifetime.others.LocaleHelper;
 import ru.alekssey7227.lifetime.others.MyAlarm;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity getInstance() {
         return instance;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
     @Override

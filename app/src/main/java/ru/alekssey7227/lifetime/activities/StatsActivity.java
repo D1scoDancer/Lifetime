@@ -1,5 +1,6 @@
 package ru.alekssey7227.lifetime.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,9 +27,16 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 
 import ru.alekssey7227.lifetime.R;
 import ru.alekssey7227.lifetime.adapters.StatsSectionsPagerAdapter;
+import ru.alekssey7227.lifetime.others.LocaleHelper;
 
 public class StatsActivity extends AppCompatActivity {
     private Toolbar gaToolbar;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,8 @@ public class StatsActivity extends AppCompatActivity {
 
         gaToolbar = findViewById(R.id.GA_toolbar);
         setSupportActionBar(gaToolbar);
+
+        setTitle(R.string.title_activity_stats);
 
         createNavigationDrawer();
     }
