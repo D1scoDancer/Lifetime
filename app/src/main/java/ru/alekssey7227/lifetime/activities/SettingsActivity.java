@@ -3,6 +3,7 @@ package ru.alekssey7227.lifetime.activities;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -62,17 +63,12 @@ public class SettingsActivity extends AppCompatActivity {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    private void updateViews(String languageCode) {
-        Context context = LocaleHelper.setLocale(this, languageCode);
-        Resources resources = context.getResources();
-        setTitle(resources.getString(R.string.title_settings_activity));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        setTitle(R.string.title_settings_activity);
 
         data = new String[]{getString(R.string.language_english), getString(R.string.language_russian)};
 
@@ -136,14 +132,22 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                String lang = "";
                 if (position == 0) {
-                    editor.putString("lang", "en");
-                    updateViews("en");
+                    lang = "en";
                 } else {
-                    editor.putString("lang", "ru");
-                    updateViews("ru");
+                    lang = "ru";
                 }
+                if(sharedPreferences.getString("lang", "def").equals(lang)){
+                    return;
+                }
+                editor.putString("lang", lang);
                 editor.apply();
+                LocaleHelper.setLocale(SettingsActivity.this, lang);
+
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
 
             @Override
