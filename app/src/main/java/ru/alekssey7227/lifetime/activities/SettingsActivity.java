@@ -112,7 +112,7 @@ public class SettingsActivity extends AppCompatActivity {
         spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), " " + position, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
